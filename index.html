@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Генеалогия ИИ: 23 компонента СРТ</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0a0a0f;
+    --gold: #c9a84c;
+    --gold-dim: #8a6d2b;
+    --blue: #4a9eff;
+    --blue-dim: #2a5a99;
+    --text: #e8e4d9;
+    --text-dim: #8a8678;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'Cormorant Garamond', Georgia, serif; overflow-x: hidden; }
+
+  .title-screen {
+    height: 100vh; display: flex; flex-direction: column;
+    justify-content: center; align-items: center; position: relative;
+  }
+  .title-screen::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at center, rgba(201,168,76,0.06) 0%, transparent 70%);
+  }
+  .title-screen h1 {
+    font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 700;
+    color: var(--gold); text-align: center; letter-spacing: 0.05em;
+    opacity: 0; animation: fadeUp 1.5s ease-out 0.3s forwards;
+  }
+  .title-sub {
+    font-size: clamp(1rem, 2.5vw, 1.5rem); color: var(--text-dim);
+    margin-top: 1.2rem; font-style: italic; text-align: center;
+    opacity: 0; animation: fadeUp 1.5s ease-out 0.8s forwards;
+  }
+  .title-years {
+    font-family: 'JetBrains Mono', monospace; font-size: 1rem;
+    color: var(--gold-dim); margin-top: 1.5rem; letter-spacing: 0.3em;
+    opacity: 0; animation: fadeUp 1.5s ease-out 1.2s forwards;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .explain-panel {
+    max-width: 1000px; margin: 0 auto; padding: 3rem 2rem 2rem;
+    opacity: 0; animation: fadeUp 1.5s ease-out 1.5s forwards;
+  }
+  .explain-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 1.5rem; }
+  .explain-card { padding: 1.8rem; border-radius: 12px; background: rgba(18,18,26,0.6); }
+  .explain-card.func { border: 1px solid var(--gold-dim); }
+  .explain-card.infra { border: 1px solid var(--blue-dim); }
+  .explain-card h3 { font-size: 1.4rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.6rem; }
+  .explain-card.func h3 { color: var(--gold); }
+  .explain-card.infra h3 { color: var(--blue); }
+  .explain-dot { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; }
+  .explain-dot.func { background: var(--gold); }
+  .explain-dot.infra { background: var(--blue); }
+  .explain-card p { color: var(--text-dim); font-size: 1.05rem; line-height: 1.6; margin-bottom: 0.8rem; }
+  .explain-card .items { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; line-height: 1.8; }
+  .explain-card.func .items { color: var(--gold-dim); }
+  .explain-card.infra .items { color: var(--blue-dim); }
+
+  .scroll-hint { text-align: center; margin-top: 2rem; opacity: 0; animation: fadeUp 1.5s ease-out 2s forwards; }
+  .scroll-hint .arrow {
+    display: inline-block; width: 24px; height: 24px;
+    border-right: 2px solid var(--gold-dim); border-bottom: 2px solid var(--gold-dim);
+    transform: rotate(45deg); animation: bounce 2s infinite;
+  }
+  @keyframes bounce {
+    0%,20%,50%,80%,100% { transform: rotate(45deg) translateY(0); }
+    40% { transform: rotate(45deg) translateY(-8px); }
+    60% { transform: rotate(45deg) translateY(-4px); }
+  }
+
+  .section-hdr { text-align: center; padding: 4rem 2rem 1.5rem; max-width: 900px; margin: 0 auto; }
+  .section-hdr h2 { font-size: 2rem; color: var(--gold); margin-bottom: 0.6rem; }
+  .section-hdr p { color: var(--text-dim); font-size: 1.05rem; font-style: italic; }
+
+  .epoch-hdr {
+    text-align: center; padding: 3rem 2rem 1rem; max-width: 900px; margin: 0 auto;
+    border-top: 1px solid rgba(201,168,76,0.12);
+  }
+  .epoch-hdr .epoch-num { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--gold-dim); letter-spacing: 0.2em; margin-bottom: 0.4rem; }
+  .epoch-hdr h3 { font-size: 1.6rem; color: var(--gold); margin-bottom: 0.3rem; }
+  .epoch-hdr .epoch-years { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--text-dim); letter-spacing: 0.1em; }
+  .epoch-hdr .epoch-desc { color: var(--text-dim); font-style: italic; font-size: 1rem; margin-top: 0.4rem; }
+
+  .timeline-wrap { padding: 1rem 2rem 4rem; max-width: 1300px; margin: 0 auto; }
+  .timeline { position: relative; padding: 1rem 0; }
+  .timeline::before {
+    content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 2px;
+    background: linear-gradient(to bottom, transparent, var(--gold-dim), var(--gold), var(--gold-dim), transparent);
+    transform: translateX(-50%);
+  }
+
+  .tl-node {
+    display: flex; align-items: center; margin-bottom: 3.5rem;
+    position: relative; opacity: 0; transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .tl-node.visible { opacity: 1; transform: translateY(0); }
+  .tl-node:nth-child(odd) { flex-direction: row; }
+  .tl-node:nth-child(even) { flex-direction: row-reverse; }
+
+  .tl-img { width: 44%; position: relative; cursor: pointer; }
+  .tl-img img { width: 100%; border-radius: 10px; transition: transform 0.4s, box-shadow 0.4s, border-color 0.4s; }
+  .tl-img img.func { border: 1px solid var(--gold-dim); }
+  .tl-img img.infra { border: 1px solid var(--blue-dim); }
+  .tl-img:hover img.func { transform: scale(1.02); box-shadow: 0 0 30px rgba(201,168,76,0.25); border-color: var(--gold); }
+  .tl-img:hover img.infra { transform: scale(1.02); box-shadow: 0 0 30px rgba(74,158,255,0.25); border-color: var(--blue); }
+
+  .tl-badge {
+    position: absolute; top: -10px;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;
+    padding: 3px 12px; border-radius: 16px; font-weight: 600; z-index: 2;
+  }
+  .tl-badge.func { background: var(--gold); color: var(--bg); }
+  .tl-badge.infra { background: var(--blue); color: var(--bg); }
+  .tl-node:nth-child(odd) .tl-badge { right: -8px; }
+  .tl-node:nth-child(even) .tl-badge { left: -8px; }
+
+  .tl-cat {
+    position: absolute; bottom: 8px; left: 8px;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
+    background: rgba(10,10,15,0.85); padding: 2px 8px; border-radius: 4px; letter-spacing: 0.12em;
+  }
+  .tl-cat.func { color: var(--gold); border: 1px solid var(--gold-dim); }
+  .tl-cat.infra { color: var(--blue); border: 1px solid var(--blue-dim); }
+
+  .tl-dot {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);
+    width: 18px; height: 18px; border-radius: 50%; border: 3px solid var(--bg); z-index: 3;
+  }
+  .tl-dot.func { background: var(--gold); box-shadow: 0 0 12px rgba(201,168,76,0.4); }
+  .tl-dot.infra { background: var(--blue); box-shadow: 0 0 12px rgba(74,158,255,0.4); }
+
+  .tl-info { width: 44%; padding: 0 2rem; }
+  .tl-info h3 { font-size: 1.5rem; margin-bottom: 0.2rem; line-height: 1.2; }
+  .tl-info h3.func { color: var(--gold); }
+  .tl-info h3.infra { color: var(--blue); }
+  .tl-info .author { font-size: 0.95rem; color: var(--text-dim); font-style: italic; margin-bottom: 0.6rem; }
+  .tl-info .fn { font-size: 0.95rem; color: var(--text); line-height: 1.5; padding-left: 0.8rem; margin-bottom: 0.5rem; border-left: 2px solid; }
+  .tl-info .fn.func { border-left-color: var(--gold-dim); }
+  .tl-info .fn.infra { border-left-color: var(--blue-dim); }
+  .tl-info .mg { font-size: 0.95rem; font-style: italic; line-height: 1.5; opacity: 0.8; }
+  .tl-info .mg.func { color: #d4a853; }
+  .tl-info .mg.infra { color: #6db3ff; }
+
+  .conn-lbl { text-align: center; margin: -1rem 0 1.5rem; position: relative; z-index: 2; }
+  .conn-lbl .arr { display: inline-block; width: 0; height: 0; border-left: 7px solid transparent; border-right: 7px solid transparent; border-top: 10px solid var(--gold-dim); margin-bottom: 0.4rem; }
+  .conn-lbl p {
+    display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+    color: var(--gold-dim); background: rgba(10,10,15,0.9); padding: 5px 14px;
+    border-radius: 16px; border: 1px solid rgba(201,168,76,0.15); max-width: 480px; line-height: 1.4;
+  }
+
+  .graph-wrap { padding: 2rem 2rem 5rem; max-width: 1500px; margin: 0 auto; }
+  .graph-box {
+    position: relative; width: 100%; aspect-ratio: 2/1;
+    background: rgba(18,18,26,0.4); border-radius: 14px;
+    border: 1px solid rgba(201,168,76,0.12); overflow: visible;
+  }
+  .row-label {
+    position: absolute; left: -10px;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
+    writing-mode: vertical-rl; text-orientation: mixed; letter-spacing: 0.1em;
+    padding: 8px 4px; border-radius: 4px;
+  }
+  .row-label.func { top: 5%; color: var(--gold-dim); background: rgba(201,168,76,0.08); }
+  .row-label.infra { top: 55%; color: var(--blue-dim); background: rgba(74,158,255,0.08); }
+  .row-sep { position: absolute; left: 1%; right: 1%; top: 46%; height: 1px; background: rgba(255,255,255,0.06); }
+  .row-sep-label {
+    position: absolute; left: 50%; top: 44%; transform: translateX(-50%);
+    font-family: 'JetBrains Mono', monospace; font-size: 0.55rem;
+    color: rgba(255,255,255,0.15); letter-spacing: 0.2em; white-space: nowrap;
+  }
+  .epoch-col-label {
+    position: absolute; top: -22px;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.55rem;
+    color: var(--gold-dim); letter-spacing: 0.1em; white-space: nowrap;
+  }
+  .epoch-col-sep { position: absolute; top: 0; bottom: 0; width: 1px; background: rgba(201,168,76,0.06); }
+
+  .gn {
+    position: absolute; width: 100px; text-align: center;
+    cursor: pointer; transition: transform 0.3s; z-index: 2;
+  }
+  .gn:hover { transform: scale(1.15); z-index: 10; }
+  .gn img { width: 95px; height: 57px; object-fit: cover; border-radius: 5px; transition: border-color 0.3s, box-shadow 0.3s; }
+  .gn img.func { border: 2px solid var(--gold-dim); }
+  .gn img.infra { border: 2px solid var(--blue-dim); }
+  .gn:hover img.func { border-color: var(--gold); box-shadow: 0 0 20px rgba(201,168,76,0.4); }
+  .gn:hover img.infra { border-color: var(--blue); box-shadow: 0 0 20px rgba(74,158,255,0.4); }
+  .gn .gn-t { font-family: 'JetBrains Mono', monospace; font-size: 0.5rem; margin-top: 2px; line-height: 1.2; }
+  .gn .gn-t.func { color: var(--gold); }
+  .gn .gn-t.infra { color: var(--blue); }
+  .gn .gn-y { font-family: 'JetBrains Mono', monospace; font-size: 0.45rem; color: var(--text-dim); }
+
+  .graph-svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+  .graph-legend { display: flex; justify-content: center; gap: 2.5rem; margin-top: 1.5rem; }
+  .gl-item { display: flex; align-items: center; gap: 0.5rem; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; }
+  .gl-dot { width: 12px; height: 12px; border-radius: 50%; }
+
+  .summary-wrap { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+  .summary-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; font-family: 'JetBrains Mono', monospace; }
+  .summary-table th { text-align: left; padding: 0.6rem 1rem; color: var(--gold); border-bottom: 2px solid var(--gold-dim); font-weight: 600; }
+  .summary-table td { padding: 0.5rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.06); color: var(--text-dim); font-size: 0.78rem; }
+  .summary-table tr:hover td { color: var(--text); background: rgba(201,168,76,0.03); }
+  .summary-table .ep-row td { color: var(--gold-dim); font-weight: 600; font-size: 0.75rem; border-bottom: 1px solid var(--gold-dim); padding-top: 1.2rem; }
+  .badge-sm { display: inline-block; padding: 1px 6px; border-radius: 8px; font-size: 0.65rem; }
+  .badge-sm.func { background: rgba(201,168,76,0.15); color: var(--gold); }
+  .badge-sm.infra { background: rgba(74,158,255,0.15); color: var(--blue); }
+
+  .modal {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.92); z-index: 1000;
+    justify-content: center; align-items: center; padding: 2rem; cursor: pointer;
+  }
+  .modal.on { display: flex; }
+  .modal-inner { max-width: 950px; max-height: 90vh; cursor: default; }
+  .modal-inner img { width: 100%; border-radius: 10px; border: 2px solid var(--gold); }
+  .modal-meta { text-align: center; margin-top: 0.8rem; }
+  .modal-meta h3 { color: var(--gold); font-size: 1.4rem; }
+  .modal-meta p { color: var(--text-dim); font-size: 0.95rem; }
+
+  .footer {
+    text-align: center; padding: 3rem 2rem; color: var(--text-dim); font-size: 0.85rem;
+    border-top: 1px solid rgba(201,168,76,0.08);
+  }
+  .footer .yr { font-family: 'JetBrains Mono', monospace; font-size: 1.3rem; color: var(--gold); letter-spacing: 0.2em; margin-bottom: 0.4rem; }
+  .footer .st { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; margin-top: 0.6rem; }
+
+  @media (max-width: 900px) {
+    .tl-node, .tl-node:nth-child(odd), .tl-node:nth-child(even) { flex-direction: column; }
+    .tl-img, .tl-info { width: 90%; }
+    .tl-info { padding: 1rem 0 0; }
+    .timeline::before { left: 20px; }
+    .tl-dot { left: 20px; }
+    .explain-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="title-screen">
+  <h1>Генеалогия<br>Искусственного Разума</h1>
+  <p class="title-sub">23 физических компонента Системы Разделения Труда,<br>без которых ИИ был бы невозможен</p>
+  <p class="title-years">1642 — 2026</p>
+</div>
+
+<div class="explain-panel">
+  <div class="explain-grid">
+    <div class="explain-card func">
+      <h3><span class="explain-dot func"></span> Функциональные компоненты</h3>
+      <p>Делают новую вычислительную операцию. Каждый — концептуальный прорыв: новый способ обработки информации, которого раньше не существовало.</p>
+      <div class="items">
+        Паскалина → Машина Бэббиджа → Перфокарта →<br>
+        Реле → Триод → Шеннон → Нейрон →<br>
+        Backprop → CNN → ReLU →<br>
+        Self-Attention → RLHF
+      </div>
+    </div>
+    <div class="explain-card infra">
+      <h3><span class="explain-dot infra"></span> Обеспечивающие компоненты</h3>
+      <p>Сами не вычисляют, но без них функциональные компоненты физически невозможны. Невидимый фундамент: точность, измерение, материалы, энергия, данные, инфраструктура.</p>
+      <div class="items">
+        Концевые меры → Осциллограф → Вакуумный насос →<br>
+        Энергосеть → Мультиметр →<br>
+        Компиляторы → Фотолитография →<br>
+        CUDA → Big Data → HBM → Облачные фермы
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint"><div class="arrow"></div></div>
+</div>
+
+<div class="section-hdr">
+  <h2>Хронология</h2>
+  <p>6 эпох эволюции — от латунных шестерней до когнитивных архитектур</p>
+</div>
+
+<div class="timeline-wrap"><div class="timeline">
+
+    </div></div>
+    <div class="epoch-hdr">
+      <div class="epoch-num">ЭПОХА 1</div>
+      <h3>Механика вычислений</h3>
+      <div class="epoch-years">1642 — 1840-е</div>
+      <div class="epoch-desc">От латунных шестерней к символьному программированию</div>
+    </div>
+    <div class="timeline-wrap"><div class="timeline">
+
+    <div class="tl-node" data-id="pascaline">
+      <div class="tl-img" onclick="openM('pascaline')">
+        <span class="tl-badge func">1642</span>
+        <img class="func" src="img/pascaline.jpg" alt="Паскалина" loading="lazy">
+        <span class="tl-cat func">ВЫЧИСЛЕНИЕ</span>
+      </div>
+      <div class="tl-dot func"></div>
+      <div class="tl-info">
+        <h3 class="func">Паскалина</h3>
+        <p class="author">Блез Паскаль, 1642</p>
+        <p class="fn func">Механизация переноса разряда при сложении</p>
+        <p class="mg func">Мышление впервые отделяется от человека и воплощается в геометрии зубьев</p>
+      </div>
+    </div>
+
+    <div class="conn-lbl"><div class="arr"></div><br><p>Геометрия зубьев позволила создать архитектуру вычислений</p></div>
+
+    <div class="tl-node" data-id="engine">
+      <div class="tl-img" onclick="openM('engine')">
+        <span class="tl-badge func">1830-е</span>
+        <img class="func" src="img/engine.jpg" alt="Аналитическая машина" loading="lazy">
+        <span class="tl-cat func">АРХИТЕКТУРА</span>
+      </div>
+      <div class="tl-dot func"></div>
+      <div class="tl-info">
+        <h3 class="func">Аналитическая машина</h3>
+        <p class="author">Чарльз Бэббидж, 1830-е</p>
+        <p class="fn func">Первое разделение хранения данных (Склад) и вычислений (Мельница)</p>
+        <p class="mg func">Машина становится системой управления данными — архитектура CPU + Память</p>
+      </div>
+    </div>
+
+    <div class="conn-lbl"><div class="arr"></div><br><p>Машине потребовался язык команд — символьный скачок</p></div>
+
+    <div class="tl-node" data-id="punchcard">
+      <div class="tl-img" onclick="openM('punchcard')">
+        <span class="tl-badge func">1840-е</span>
+        <img class="func" src="img/punchcard.jpg" alt="Перфокарта Лавлейс" loading="lazy">
+        <span class="tl-cat func">ПРОГРАММА</span>
+      </div>
+      <div class="tl-dot func"></div>
+      <div class="tl-info">
+        <h3 class="func">Перфокарта Лавлейс</h3>
+        <p class="author">Ада Лавлейс, 1840-е</p>
+        <p class="fn func">Кодирование алгоритмических команд: циклы и переходы</p>
+        <p class="mg func">Символьный скачок — машина работает не с цифрами, а с символами по правилам логики</p>
+      </div>
+    </div>
+
+    <div class="conn-lbl"><div class="arr"></div><br><p>Архитектура требует точности — каждая деталь Бэббиджа была уникальной</p></div>
+
+    </div></div>
+    <div class="epoch-hdr">
+      <div class="epoch-num">ЭПОХА 2</div>
+      <h3>Электрическая эра</h3>
+      <div class="epoch-years">кон. XIX в. — 1920-е</div>
+      <div class="epoch-desc">Точность, электроника и невидимая инфраструктура</div>
+    </div>
+    <div class="timeline-wrap"><div class="timeline">
+
+    <div class="tl-node" data-id="gauge">
+      <div class="tl-img" onclick="openM('gauge')">
+        <span class="tl-badge infra">кон. XIX в.</span>
+        <img class="infra" src="img/gauge.jpg" alt="Концевые меры и микрометр" loading="lazy">
+        <span class="tl-cat infra">ТОЧНОСТЬ</span>
+      </div>
+      <div class="tl-dot infra"></div>
+      <div class="tl-info">
+        <h3 class="infra">Концевые меры и микрометр</h3>
+        <p class="author">К. Э. Иогансон, кон. XIX в.</p>
+        <p class="fn infra">Стандарты точности до микрона — взаимозаменяемые детали</p>
+        <p class="mg infra">Каждая деталь Бэббиджа была уникальной. Теперь можно собирать машины из стандартных частей</p>
+      </div>
+    </div>
+
+    <div class="conn-lbl"><div class="arr"></div><br><p>Точные детали позволили строить надёжные электромеханические устройства</p></div>
+
+    <div class="tl-node" data-id="relay">
+      <div class="tl-img" onclick="openM('relay')">
+        <span class="tl-badge func">1889</span>
+        <img class="func" src="img/relay.jpg" alt="Электромеханическое реле" loading="lazy">
+        <span class="tl-cat func">ПЕРЕКЛЮЧЕНИЕ</span>
+      </div>
+      <div class="tl-dot func"></div>
+      <div class="tl-info">
+        <h3 class="func">Электромеханическое реле</h3>
+        <p class="author">Элмон Строуджер, 1889</p>
+        <p class="fn func">Автоматическая коммутация без участия человека</p>
+        <p class="mg func">Физическое воплощение логического выбора — материальное ДА или НЕТ</p>
+      </div>
+    </div>
+
+    <div class="conn-lbl"><div class="arr"></div><br><p>Электричество невидимо — инженеру нужны «глаза»</p></div>
+
+    <div class="tl-node" data-id="oscilloscope">
+      <div class="tl-img" onclick="openM('oscilloscope')">
+        <span class="tl-badge infra">1897</span>
+        <img class="infra" src="img/oscilloscope.jpg" alt="Осциллограф" loading="lazy">
+        <span class="tl-cat infra">ИЗМЕРЕНИЕ</span>
+      </div>
+      <div class="tl-dot infra"></div>
+      <div class="tl-info">
+        <h3 class="infra">Осциллограф</h3>
+        <p class="author">Карл Ф. Браун, 1897</p>
+        <p class="fn infra">Визуализация формы электрического сигнала</p>
+        <p class="mg infra">«Глаза» инженера — без него вы не видите, что происходит внутри провода</p>
+      </div>
+    </div>
+
+    <div class="conn-lbl"><div class="arr"></div><br><p>Лампа требует вакуума и сверхчистых материалов</p></div>
+
+    <div class="tl-node" data-id="vacuum_pump">
+      <div class="tl-img" onclick="openM('vacuum_pump')">
+        <span class="tl-badge infra">нач. XX в.</span>
+        <img class="infra" src="img/vacuum_pump.jpg" alt="Вакуумный насос" loading="lazy">
+        <span class="tl-cat infra">МАТЕРИАЛЫ</span>
+      </div>
+      <div class="tl-dot infra"></div>
+      <div class="tl-info">
+        <h3 class="infra">Вакуумный насос</h3>
+        <p class="author">Химическая промышленность, нач. XX в.</p>
+        <p class="fn infra">Глубокий вакуум + сверхчистые металлы (99.99%)</p>
+        <p class="mg infra">Без вакуума и чистого вольфрама лампа не работает. Путь к кремнию и полупроводникам</p>
+      </div>
+    </div>
+
+    <div class="conn-lbl"><div class="arr"></div><br><p>Вакуум + чистота + точность = электронный переключатель</p></div>
+
+    <div class="tl-node" data-id="triode">
+      <div class="tl-img" onclick="openM('triode')">
+        <span class="tl-badge func">1906</span>
+        <img class="func" src="img/triode.jpg" alt="Вакуумный триод" loading="lazy">
+        <span class="tl-cat func">ЭЛЕКТРОНИКА</span>
+      </div>
+      <div class="tl-dot func"></div>
+      <div class="tl-info">
+        <h3 class="func">Вакуумный триод</h3>
+        <p class="author">Ли де Форест, 1906</p>
+        <p class="fn func">Управление потоком электронов в вакууме</p>
+        <p class="mg func">Безынерционное реле — переключение 0/1 в миллионы раз быстрее механики</p>
+      </div>
+    </div>
+
+    <div class="conn-lbl"><div class="arr"></div><br><p>Тысячи ламп требуют стабильного питания 24/7</p></div>
+
+    <div class="tl-node" data-id="powergrid">
+      <div class="tl-img" onclick="openM('powergrid')">
+        <span class="tl-badge infra">1920-е</span>
+        <img class="infra" src="img/powergrid.jpg" alt="Энергосеть" loading="lazy">
+        <span class="tl-cat infra">ЭНЕРГИЯ</span>
+      </div>
+      <div class="tl-dot infra"></div>
+      <div class="tl-info">
+        <h3 class="infra">Энергосеть</h3>
+        <p class="author">Индустриализация, 1920-е</p>
+        <p class="fn infra">Стабильный ток 24/7 для тысяч вакуумных ламп</p>
+        <p class="mg infra">Без стабильной энергосети компьютер постоянно забывал бы результаты из-за скачков напряжения</p>
+      </div>
+    </div>
+
+    <div class="conn-lbl"><div class="arr"></div><br><p>18 000 ламп — нужна мгновенная диагностика каждой</p></div>
+
+    <div class="tl-node" data-id="multimeter">
+      <div class="tl-img" onclick="openM('multimeter')">
+        <span class="tl-badge infra">1920-е</span>
+        <img class="infra" src="img/multimeter.jpg" alt="Мультиметр" loading="lazy">
+        <span class="tl-cat infra">ДИАГНОСТИКА</span>
+      </div>
+      <div class="tl-dot infra"></div>
+      <div class="tl-info">
+        <h3 class="infra">Мультиметр</h3>
+        <p class="author">Индустрия диагностики, 1920-е</p>
+        <p class="fn infra">Мгновенная проверка каждой из 18 000 ламп ЭНИАКа</p>
+        <p class="mg infra">Без инструментов поиска «битого» узла система из тысяч элементов нежизнеспособна</p>
+      </div>
+    </div>
+
+    <div class="conn-lbl"><div class="arr"></div><br><p>Железо готово — нужен формальный язык логики</p></div>
+
+    </div></div>
+    <div class="epoch-hdr">
+      <div class="epoch-num">ЭПОХА 3</div>
+      <h3>Математическое основание</h3>
+      <div class="epoch-years">1938 — 1943</div>
+      <div class="epoch-desc">Логика получает электронное тело</div>
+    </div>
+    <div class="timeline-wrap"><div class="timeline">
+
+    <div class="tl-node" data-id="shannon">
+      <div class="tl-img" onclick="openM('shannon')">
+        <span class="tl-badge func">1938</span>
+        <img class="func" src="img/shannon.jpg" alt="Схемы Шеннона" loading="lazy">
+        <span class="tl-cat func">ЛОГИКА</span>
+      </div>
+      <div class="tl-dot func"></div>
+      <div class="tl-info">
+        <h3 class="func">Схемы Шеннона</h3>
+        <p class="author">Клод Шеннон, 1938</p>
+        <p class="fn func">Доказательство: булева логика = электрические цепи</p>
+        <p class="mg func">Математика получила электронное тело</p>
+      </div>
+    </div>
+
+    <div class="conn-lbl"><div class="arr"></div><br><p>Язык + Железо = среда для нейросетей</p></div>
+
+    <div class="tl-node" data-id="neuron">
+      <div class="tl-img" onclick="openM('neuron')">
+        <span class="tl-badge func">1943</span>
+        <img class="func" src="img/neuron.jpg" alt="Математический нейрон" loading="lazy">
+        <span class="tl-cat func">СЕТЬ</span>
+      </div>
+      <div class="tl-dot func"></div>
+      <div class="tl-info">
+        <h3 class="func">Математический нейрон</h3>
+        <p class="author">Мак-Каллок & Питтс, 1943</p>
+        <p class="fn func">Моделирование клетки мозга через сеть логических реле</p>
+        <p class="mg func">Мышление — не одна формула, а результат работы сети простых переключателей</p>
+      </div>
+    </div>
+
+    <div class="conn-lbl"><div class="arr"></div><br><p>Разрыв после перцептрона: нужны новые технологические слои</p></div>
+
+    </div></div>
+    <div class="epoch-hdr">
+      <div class="epoch-num">ЭПОХА 4</div>
+      <h3>Полупроводниковая революция</h3>
+      <div class="epoch-years">1960-е — 1986</div>
+      <div class="epoch-desc">От штучных ламп к массовому производству интеллектуального материала</div>
+    </div>
+    <div class="timeline-wrap"><div class="timeline">
+
+    <div class="tl-node" data-id="compiler">
+      <div class="tl-img" onclick="openM('compiler')">
+        <span class="tl-badge infra">1960-е</span>
+        <img class="infra" src="img/compiler.jpg" alt="Компиляторы и ЯВУ" loading="lazy">
+        <span class="tl-cat infra">АБСТРАКЦИЯ</span>
+      </div>
+      <div class="tl-dot infra"></div>
+      <div class="tl-info">
+        <h3 class="infra">Компиляторы и ЯВУ</h3>
+        <p class="author">Грейс Хоппер, Деннис Ритчи, 1960-е</p>
+        <p class="fn infra">Отделение математики нейросетей от железа. Описание архитектуры кодом, не регистрами</p>
+        <p class="mg infra">Математика абстрагировалась от машины — можно думать на языке задачи, а не процессора</p>
+      </div>
+    </div>
+
+    <div class="conn-lbl"><div class="arr"></div><br><p>Миллионы транзисторов на чипе = среда для многослойных сетей</p></div>
+
+    <div class="tl-node" data-id="photolithography">
+      <div class="tl-img" onclick="openM('photolithography')">
+        <span class="tl-badge infra">1970-е</span>
+        <img class="infra" src="img/photolithography.jpg" alt="Фотолитография" loading="lazy">
+        <span class="tl-cat infra">ПРОИЗВОДСТВО</span>
+      </div>
+      <div class="tl-dot infra"></div>
+      <div class="tl-info">
+        <h3 class="infra">Фотолитография</h3>
+        <p class="author">ASML и предшественники, 1970-е</p>
+        <p class="fn infra">Печать миллионов транзисторов на одном кристалле через длину волны света</p>
+        <p class="mg infra">Если для Бэббиджа пределом был микрометр, то здесь предел — длина волны света</p>
+      </div>
+    </div>
+
+    <div class="conn-lbl"><div class="arr"></div><br><p>Цепное правило: обучение больше не ограничено одним слоём</p></div>
+
+    <div class="tl-node" data-id="backprop">
+      <div class="tl-img" onclick="openM('backprop')">
+        <span class="tl-badge func">1986</span>
+        <img class="func" src="img/backprop.jpg" alt="Backpropagation" loading="lazy">
+        <span class="tl-cat func">ОПТИМИЗАЦИЯ</span>
+      </div>
+      <div class="tl-dot func"></div>
+      <div class="tl-info">
+        <h3 class="func">Backpropagation</h3>
+        <p class="author">Хинтон, Румельхарт, Уильямс, 1986</p>
+        <p class="fn func">Цепное правило для поиска градиента ошибки через все слои сети</p>
+        <p class="mg func">Один нейрон не решает XOR. Backprop позволил обучать неограниченное количество слоёв</p>
+      </div>
+    </div>
+
+    <div class="conn-lbl"><div class="arr"></div><br><p>Свёртка делает нейрон чувствительным к пространству</p></div>
+
+    </div></div>
+    <div class="epoch-hdr">
+      <div class="epoch-num">ЭПОХА 5</div>
+      <h3>Параллелизм и геометрия</h3>
+      <div class="epoch-years">1998 — 2012</div>
+      <div class="epoch-desc">Универсальные вычисления разделяются на CPU и GPU</div>
+    </div>
+    <div class="timeline-wrap"><div class="timeline">
+
+    <div class="tl-node" data-id="cnn">
+      <div class="tl-img" onclick="openM('cnn')">
+        <span class="tl-badge func">1998</span>
+        <img class="func" src="img/cnn.jpg" alt="Свёртка (CNN)" loading="lazy">
+        <span class="tl-cat func">ПРОСТРАНСТВО</span>
+      </div>
+      <div class="tl-dot func"></div>
+      <div class="tl-info">
+        <h3 class="func">Свёртка (CNN)</h3>
+        <p class="author">Ян ЛеКун, 1998</p>
+        <p class="fn func">Операция свёртки (f*g)(t) — инвариантность к сдвигу через локальные ядра</p>
+        <p class="mg func">Нейрон стал работать не со всей картинкой, а с локальными признаками</p>
+      </div>
+    </div>
+
+    <div class="conn-lbl"><div class="arr"></div><br><p>Простота убивает сложность — градиент перестаёт затухать</p></div>
+
+    <div class="tl-node" data-id="relu">
+      <div class="tl-img" onclick="openM('relu')">
+        <span class="tl-badge func">~2010</span>
+        <img class="func" src="img/relu.jpg" alt="ReLU" loading="lazy">
+        <span class="tl-cat func">АКТИВАЦИЯ</span>
+      </div>
+      <div class="tl-dot func"></div>
+      <div class="tl-info">
+        <h3 class="func">ReLU</h3>
+        <p class="author">Нэйр, Хинтон, ~2010</p>
+        <p class="fn func">f(x) = max(0, x) — замена сложных экспонент на простой перегиб</p>
+        <p class="mg func">Убрал проблему затухающего градиента. Простота радикально ускорила вычисления</p>
+      </div>
+    </div>
+
+    <div class="conn-lbl"><div class="arr"></div><br><p>Параллельные вычисления: GPU = тысячи нейронов одновременно</p></div>
+
+    <div class="tl-node" data-id="cuda">
+      <div class="tl-img" onclick="openM('cuda')">
+        <span class="tl-badge infra">2006</span>
+        <img class="infra" src="img/cuda.jpg" alt="NVIDIA CUDA" loading="lazy">
+        <span class="tl-cat infra">ПАРАЛЛЕЛИЗМ</span>
+      </div>
+      <div class="tl-dot infra"></div>
+      <div class="tl-info">
+        <h3 class="infra">NVIDIA CUDA</h3>
+        <p class="author">NVIDIA, 2006</p>
+        <p class="fn infra">Видеокарта как массивный параллельный калькулятор для линейной алгебры</p>
+        <p class="mg infra">«Инструмент измерения» нового типа — CUDA превратила GPU в суперкомпьютер для матриц</p>
+      </div>
+    </div>
+
+    <div class="conn-lbl"><div class="arr"></div><br><p>Без данных математика глубокого обучения не имеет смысла</p></div>
+
+    <div class="tl-node" data-id="bigdata">
+      <div class="tl-img" onclick="openM('bigdata')">
+        <span class="tl-badge infra">2000-е</span>
+        <img class="infra" src="img/bigdata.jpg" alt="Интернет и Big Data" loading="lazy">
+        <span class="tl-cat infra">ДАННЫЕ</span>
+      </div>
+      <div class="tl-dot infra"></div>
+      <div class="tl-info">
+        <h3 class="infra">Интернет и Big Data</h3>
+        <p class="author">Web 2.0, 2000-е</p>
+        <p class="fn infra">Создание среды данных — миллиарды изображений, текстов, взаимодействий</p>
+        <p class="mg infra">В 1920-х вакуумный насос создавал среду для электронов. Интернет создал среду для обучения</p>
+      </div>
+    </div>
+
+    <div class="conn-lbl"><div class="arr"></div><br><p>Отказ от последовательности: каждое слово видит каждое другое</p></div>
+
+    </div></div>
+    <div class="epoch-hdr">
+      <div class="epoch-num">ЭПОХА 6</div>
+      <h3>Эпоха внимания</h3>
+      <div class="epoch-years">2017 — 2026</div>
+      <div class="epoch-desc">Когнитивные архитектуры и предельная специализация</div>
+    </div>
+    <div class="timeline-wrap"><div class="timeline">
+
+    <div class="tl-node" data-id="attention">
+      <div class="tl-img" onclick="openM('attention')">
+        <span class="tl-badge func">2017</span>
+        <img class="func" src="img/attention.jpg" alt="Self-Attention" loading="lazy">
+        <span class="tl-cat func">ВНИМАНИЕ</span>
+      </div>
+      <div class="tl-dot func"></div>
+      <div class="tl-info">
+        <h3 class="func">Self-Attention</h3>
+        <p class="author">Васвани и др., 2017</p>
+        <p class="fn func">Attention(Q,K,V) = softmax(QK^T / sqrt(d_k)) V — отказ от последовательной обработки</p>
+        <p class="mg func">Каждое слово видит каждое другое слово одновременно. Параллелизм на уровне математики</p>
+      </div>
+    </div>
+
+    <div class="conn-lbl"><div class="arr"></div><br><p>Модель учится не предсказывать, а рассуждать</p></div>
+
+    <div class="tl-node" data-id="rlhf">
+      <div class="tl-img" onclick="openM('rlhf')">
+        <span class="tl-badge func">2022</span>
+        <img class="func" src="img/rlhf.jpg" alt="RLHF" loading="lazy">
+        <span class="tl-cat func">РАССУЖДЕНИЕ</span>
+      </div>
+      <div class="tl-dot func"></div>
+      <div class="tl-info">
+        <h3 class="func">RLHF</h3>
+        <p class="author">OpenAI, Anthropic, 2022</p>
+        <p class="fn func">Обучение через обратную связь от человека — оптимизация «полезности», а не предсказания</p>
+        <p class="mg func">Модель учится не просто предсказывать следующее слово, а быть полезной</p>
+      </div>
+    </div>
+
+    <div class="conn-lbl"><div class="arr"></div><br><p>Без быстрой памяти вычислительная мощь бесполезна</p></div>
+
+    <div class="tl-node" data-id="hbm">
+      <div class="tl-img" onclick="openM('hbm')">
+        <span class="tl-badge infra">2010-е</span>
+        <img class="infra" src="img/hbm.jpg" alt="HBM память" loading="lazy">
+        <span class="tl-cat infra">ПРОПУСКНАЯ СПОСОБНОСТЬ</span>
+      </div>
+      <div class="tl-dot infra"></div>
+      <div class="tl-info">
+        <h3 class="infra">HBM память</h3>
+        <p class="author">SK Hynix, Samsung, 2010-е</p>
+        <p class="fn infra">Сверхбыстрая стопка памяти — данные успевают долетать до ядер GPU</p>
+        <p class="mg infra">Более узкое место в СРТ, чем сами чипы. Без HBM вычислительная мощь бесполезна</p>
+      </div>
+    </div>
+
+    <div class="conn-lbl"><div class="arr"></div><br><p>Участник СРТ потребляет «ток вычислений» через API</p></div>
+
+    <div class="tl-node" data-id="cloudfarm">
+      <div class="tl-img" onclick="openM('cloudfarm')">
+        <span class="tl-badge infra">2020-е</span>
+        <img class="infra" src="img/cloudfarm.jpg" alt="Облачные фермы" loading="lazy">
+        <span class="tl-cat infra">ИНФРАСТРУКТУРА</span>
+      </div>
+      <div class="tl-dot infra"></div>
+      <div class="tl-info">
+        <h3 class="infra">Облачные фермы</h3>
+        <p class="author">Azure, AWS, Google, 2020-е</p>
+        <p class="fn infra">Кластеры 100 000+ GPU — современные «энергосети вычислений»</p>
+        <p class="mg infra">Участник СРТ больше не владеет мощностями — потребляет «ток вычислений» через API</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="section-hdr">
+  <h2>Итоговая таблица СРТ</h2>
+  <p>Система Разделения Труда: от механики к когнитивным архитектурам</p>
+</div>
+<div class="summary-wrap">
+  <table class="summary-table">
+    <thead><tr><th>Компонент</th><th>Слой</th><th>Функция</th><th>Значение для СРТ</th></tr></thead>
+    <tbody>
+<tr class="ep-row"><td colspan="4">ЭПОХА 1: Механика вычислений (1642 — 1840-е)</td></tr>
+<tr><td>Паскалина (1642)</td><td><span class="badge-sm func">Функц.</span></td><td>Механизация переноса разряда при сложении</td><td>Мышление впервые отделяется от человека и воплощается в геометрии зубьев</td></tr>
+<tr><td>Аналитическая машина (1830-е)</td><td><span class="badge-sm func">Функц.</span></td><td>Первое разделение хранения данных (Склад) и вычислений (Мельница)</td><td>Машина становится системой управления данными — архитектура CPU + Память</td></tr>
+<tr><td>Перфокарта Лавлейс (1840-е)</td><td><span class="badge-sm func">Функц.</span></td><td>Кодирование алгоритмических команд: циклы и переходы</td><td>Символьный скачок — машина работает не с цифрами, а с символами по правилам логики</td></tr>
+<tr class="ep-row"><td colspan="4">ЭПОХА 2: Электрическая эра (кон. XIX в. — 1920-е)</td></tr>
+<tr><td>Концевые меры и микрометр (кон. XIX в.)</td><td><span class="badge-sm infra">Обеспеч.</span></td><td>Стандарты точности до микрона — взаимозаменяемые детали</td><td>Каждая деталь Бэббиджа была уникальной. Теперь можно собирать машины из стандартных частей</td></tr>
+<tr><td>Электромеханическое реле (1889)</td><td><span class="badge-sm func">Функц.</span></td><td>Автоматическая коммутация без участия человека</td><td>Физическое воплощение логического выбора — материальное ДА или НЕТ</td></tr>
+<tr><td>Осциллограф (1897)</td><td><span class="badge-sm infra">Обеспеч.</span></td><td>Визуализация формы электрического сигнала</td><td>«Глаза» инженера — без него вы не видите, что происходит внутри провода</td></tr>
+<tr><td>Вакуумный насос (нач. XX в.)</td><td><span class="badge-sm infra">Обеспеч.</span></td><td>Глубокий вакуум + сверхчистые металлы (99.99%)</td><td>Без вакуума и чистого вольфрама лампа не работает. Путь к кремнию и полупроводникам</td></tr>
+<tr><td>Вакуумный триод (1906)</td><td><span class="badge-sm func">Функц.</span></td><td>Управление потоком электронов в вакууме</td><td>Безынерционное реле — переключение 0/1 в миллионы раз быстрее механики</td></tr>
+<tr><td>Энергосеть (1920-е)</td><td><span class="badge-sm infra">Обеспеч.</span></td><td>Стабильный ток 24/7 для тысяч вакуумных ламп</td><td>Без стабильной энергосети компьютер постоянно забывал бы результаты из-за скачков напряжения</td></tr>
+<tr><td>Мультиметр (1920-е)</td><td><span class="badge-sm infra">Обеспеч.</span></td><td>Мгновенная проверка каждой из 18 000 ламп ЭНИАКа</td><td>Без инструментов поиска «битого» узла система из тысяч элементов нежизнеспособна</td></tr>
+<tr class="ep-row"><td colspan="4">ЭПОХА 3: Математическое основание (1938 — 1943)</td></tr>
+<tr><td>Схемы Шеннона (1938)</td><td><span class="badge-sm func">Функц.</span></td><td>Доказательство: булева логика = электрические цепи</td><td>Математика получила электронное тело</td></tr>
+<tr><td>Математический нейрон (1943)</td><td><span class="badge-sm func">Функц.</span></td><td>Моделирование клетки мозга через сеть логических реле</td><td>Мышление — не одна формула, а результат работы сети простых переключателей</td></tr>
+<tr class="ep-row"><td colspan="4">ЭПОХА 4: Полупроводниковая революция (1960-е — 1986)</td></tr>
+<tr><td>Компиляторы и ЯВУ (1960-е)</td><td><span class="badge-sm infra">Обеспеч.</span></td><td>Отделение математики нейросетей от железа. Описание архитектуры кодом, не регистрами</td><td>Математика абстрагировалась от машины — можно думать на языке задачи, а не процессора</td></tr>
+<tr><td>Фотолитография (1970-е)</td><td><span class="badge-sm infra">Обеспеч.</span></td><td>Печать миллионов транзисторов на одном кристалле через длину волны света</td><td>Если для Бэббиджа пределом был микрометр, то здесь предел — длина волны света</td></tr>
+<tr><td>Backpropagation (1986)</td><td><span class="badge-sm func">Функц.</span></td><td>Цепное правило для поиска градиента ошибки через все слои сети</td><td>Один нейрон не решает XOR. Backprop позволил обучать неограниченное количество слоёв</td></tr>
+<tr class="ep-row"><td colspan="4">ЭПОХА 5: Параллелизм и геометрия (1998 — 2012)</td></tr>
+<tr><td>Свёртка (CNN) (1998)</td><td><span class="badge-sm func">Функц.</span></td><td>Операция свёртки (f*g)(t) — инвариантность к сдвигу через локальные ядра</td><td>Нейрон стал работать не со всей картинкой, а с локальными признаками</td></tr>
+<tr><td>ReLU (~2010)</td><td><span class="badge-sm func">Функц.</span></td><td>f(x) = max(0, x) — замена сложных экспонент на простой перегиб</td><td>Убрал проблему затухающего градиента. Простота радикально ускорила вычисления</td></tr>
+<tr><td>NVIDIA CUDA (2006)</td><td><span class="badge-sm infra">Обеспеч.</span></td><td>Видеокарта как массивный параллельный калькулятор для линейной алгебры</td><td>«Инструмент измерения» нового типа — CUDA превратила GPU в суперкомпьютер для матриц</td></tr>
+<tr><td>Интернет и Big Data (2000-е)</td><td><span class="badge-sm infra">Обеспеч.</span></td><td>Создание среды данных — миллиарды изображений, текстов, взаимодействий</td><td>В 1920-х вакуумный насос создавал среду для электронов. Интернет создал среду для обучения</td></tr>
+<tr class="ep-row"><td colspan="4">ЭПОХА 6: Эпоха внимания (2017 — 2026)</td></tr>
+<tr><td>Self-Attention (2017)</td><td><span class="badge-sm func">Функц.</span></td><td>Attention(Q,K,V) = softmax(QK^T / sqrt(d_k)) V — отказ от последовательной обработки</td><td>Каждое слово видит каждое другое слово одновременно. Параллелизм на уровне математики</td></tr>
+<tr><td>RLHF (2022)</td><td><span class="badge-sm func">Функц.</span></td><td>Обучение через обратную связь от человека — оптимизация «полезности», а не предсказания</td><td>Модель учится не просто предсказывать следующее слово, а быть полезной</td></tr>
+<tr><td>HBM память (2010-е)</td><td><span class="badge-sm infra">Обеспеч.</span></td><td>Сверхбыстрая стопка памяти — данные успевают долетать до ядер GPU</td><td>Более узкое место в СРТ, чем сами чипы. Без HBM вычислительная мощь бесполезна</td></tr>
+<tr><td>Облачные фермы (2020-е)</td><td><span class="badge-sm infra">Обеспеч.</span></td><td>Кластеры 100 000+ GPU — современные «энергосети вычислений»</td><td>Участник СРТ больше не владеет мощностями — потребляет «ток вычислений» через API</td></tr>
+
+    </tbody>
+  </table>
+</div>
+
+<div class="section-hdr">
+  <h2>Граф зависимостей</h2>
+  <p>Верхний ряд — функциональные компоненты. Нижний — обеспечивающие.<br>
+  6 эпох слева направо. Стрелки: «без чего было бы невозможно»</p>
+</div>
+
+<div class="graph-wrap">
+  <div class="graph-box" id="gBox">
+    <svg class="graph-svg" id="gSvg">
+      <defs>
+        <marker id="aGold" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="rgba(201,168,76,0.6)"/>
+        </marker>
+        <marker id="aBlue" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="rgba(74,158,255,0.6)"/>
+        </marker>
+        <marker id="aMix" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="rgba(160,160,160,0.5)"/>
+        </marker>
+      </defs>
+    </svg>
+    <div class="row-label func">ФУНКЦИОНАЛЬНЫЕ</div>
+    <div class="row-label infra">ОБЕСПЕЧИВАЮЩИЕ</div>
+    <div class="row-sep"></div>
+    <div class="row-sep-label">— невидимый фундамент —</div>
+    <div class="epoch-col-label" style="left:2%">Эпоха 1: 1642 — 1840-е</div>
+    <div class="epoch-col-label" style="left:14%">Эпоха 2: кон. XIX в. — 1920-е</div>
+    <div class="epoch-col-sep" style="left:12%"></div>
+    <div class="epoch-col-label" style="left:30%">Эпоха 3: 1938 — 1943</div>
+    <div class="epoch-col-sep" style="left:28%"></div>
+    <div class="epoch-col-label" style="left:42%">Эпоха 4: 1960-е — 1986</div>
+    <div class="epoch-col-sep" style="left:40%"></div>
+    <div class="epoch-col-label" style="left:56%">Эпоха 5: 1998 — 2012</div>
+    <div class="epoch-col-sep" style="left:54%"></div>
+    <div class="epoch-col-label" style="left:74%">Эпоха 6: 2017 — 2026</div>
+    <div class="epoch-col-sep" style="left:72%"></div>
+
+    <div class="gn" id="gn-pascaline" style="left:2%;top:5%" onclick="openM('pascaline')">
+      <img class="func" src="img/pascaline.jpg" alt="Паскалина">
+      <div class="gn-t func">Паскалина</div>
+      <div class="gn-y">1642</div>
+    </div>
+
+    <div class="gn" id="gn-engine" style="left:2%;top:18%" onclick="openM('engine')">
+      <img class="func" src="img/engine.jpg" alt="Аналитическая машина">
+      <div class="gn-t func">Аналитическая машина</div>
+      <div class="gn-y">1830-е</div>
+    </div>
+
+    <div class="gn" id="gn-punchcard" style="left:2%;top:31%" onclick="openM('punchcard')">
+      <img class="func" src="img/punchcard.jpg" alt="Перфокарта Лавлейс">
+      <div class="gn-t func">Перфокарта Лавлейс</div>
+      <div class="gn-y">1840-е</div>
+    </div>
+
+    <div class="gn" id="gn-gauge" style="left:14%;top:58%" onclick="openM('gauge')">
+      <img class="infra" src="img/gauge.jpg" alt="Концевые меры и микрометр">
+      <div class="gn-t infra">Концевые меры и микрометр</div>
+      <div class="gn-y">кон. XIX в.</div>
+    </div>
+
+    <div class="gn" id="gn-relay" style="left:14%;top:5%" onclick="openM('relay')">
+      <img class="func" src="img/relay.jpg" alt="Электромеханическое реле">
+      <div class="gn-t func">Электромеханическое реле</div>
+      <div class="gn-y">1889</div>
+    </div>
+
+    <div class="gn" id="gn-oscilloscope" style="left:14%;top:71%" onclick="openM('oscilloscope')">
+      <img class="infra" src="img/oscilloscope.jpg" alt="Осциллограф">
+      <div class="gn-t infra">Осциллограф</div>
+      <div class="gn-y">1897</div>
+    </div>
+
+    <div class="gn" id="gn-vacuum_pump" style="left:22%;top:58%" onclick="openM('vacuum_pump')">
+      <img class="infra" src="img/vacuum_pump.jpg" alt="Вакуумный насос">
+      <div class="gn-t infra">Вакуумный насос</div>
+      <div class="gn-y">нач. XX в.</div>
+    </div>
+
+    <div class="gn" id="gn-triode" style="left:22%;top:5%" onclick="openM('triode')">
+      <img class="func" src="img/triode.jpg" alt="Вакуумный триод">
+      <div class="gn-t func">Вакуумный триод</div>
+      <div class="gn-y">1906</div>
+    </div>
+
+    <div class="gn" id="gn-powergrid" style="left:22%;top:71%" onclick="openM('powergrid')">
+      <img class="infra" src="img/powergrid.jpg" alt="Энергосеть">
+      <div class="gn-t infra">Энергосеть</div>
+      <div class="gn-y">1920-е</div>
+    </div>
+
+    <div class="gn" id="gn-multimeter" style="left:30%;top:58%" onclick="openM('multimeter')">
+      <img class="infra" src="img/multimeter.jpg" alt="Мультиметр">
+      <div class="gn-t infra">Мультиметр</div>
+      <div class="gn-y">1920-е</div>
+    </div>
+
+    <div class="gn" id="gn-shannon" style="left:30%;top:5%" onclick="openM('shannon')">
+      <img class="func" src="img/shannon.jpg" alt="Схемы Шеннона">
+      <div class="gn-t func">Схемы Шеннона</div>
+      <div class="gn-y">1938</div>
+    </div>
+
+    <div class="gn" id="gn-neuron" style="left:38%;top:18%" onclick="openM('neuron')">
+      <img class="func" src="img/neuron.jpg" alt="Математический нейрон">
+      <div class="gn-t func">Математический нейрон</div>
+      <div class="gn-y">1943</div>
+    </div>
+
+    <div class="gn" id="gn-compiler" style="left:42%;top:58%" onclick="openM('compiler')">
+      <img class="infra" src="img/compiler.jpg" alt="Компиляторы и ЯВУ">
+      <div class="gn-t infra">Компиляторы и ЯВУ</div>
+      <div class="gn-y">1960-е</div>
+    </div>
+
+    <div class="gn" id="gn-photolithography" style="left:42%;top:71%" onclick="openM('photolithography')">
+      <img class="infra" src="img/photolithography.jpg" alt="Фотолитография">
+      <div class="gn-t infra">Фотолитография</div>
+      <div class="gn-y">1970-е</div>
+    </div>
+
+    <div class="gn" id="gn-backprop" style="left:50%;top:5%" onclick="openM('backprop')">
+      <img class="func" src="img/backprop.jpg" alt="Backpropagation">
+      <div class="gn-t func">Backpropagation</div>
+      <div class="gn-y">1986</div>
+    </div>
+
+    <div class="gn" id="gn-cnn" style="left:56%;top:5%" onclick="openM('cnn')">
+      <img class="func" src="img/cnn.jpg" alt="Свёртка (CNN)">
+      <div class="gn-t func">Свёртка (CNN)</div>
+      <div class="gn-y">1998</div>
+    </div>
+
+    <div class="gn" id="gn-relu" style="left:56%;top:18%" onclick="openM('relu')">
+      <img class="func" src="img/relu.jpg" alt="ReLU">
+      <div class="gn-t func">ReLU</div>
+      <div class="gn-y">~2010</div>
+    </div>
+
+    <div class="gn" id="gn-cuda" style="left:64%;top:58%" onclick="openM('cuda')">
+      <img class="infra" src="img/cuda.jpg" alt="NVIDIA CUDA">
+      <div class="gn-t infra">NVIDIA CUDA</div>
+      <div class="gn-y">2006</div>
+    </div>
+
+    <div class="gn" id="gn-bigdata" style="left:64%;top:71%" onclick="openM('bigdata')">
+      <img class="infra" src="img/bigdata.jpg" alt="Интернет и Big Data">
+      <div class="gn-t infra">Интернет и Big Data</div>
+      <div class="gn-y">2000-е</div>
+    </div>
+
+    <div class="gn" id="gn-attention" style="left:74%;top:5%" onclick="openM('attention')">
+      <img class="func" src="img/attention.jpg" alt="Self-Attention">
+      <div class="gn-t func">Self-Attention</div>
+      <div class="gn-y">2017</div>
+    </div>
+
+    <div class="gn" id="gn-rlhf" style="left:74%;top:18%" onclick="openM('rlhf')">
+      <img class="func" src="img/rlhf.jpg" alt="RLHF">
+      <div class="gn-t func">RLHF</div>
+      <div class="gn-y">2022</div>
+    </div>
+
+    <div class="gn" id="gn-hbm" style="left:82%;top:58%" onclick="openM('hbm')">
+      <img class="infra" src="img/hbm.jpg" alt="HBM память">
+      <div class="gn-t infra">HBM память</div>
+      <div class="gn-y">2010-е</div>
+    </div>
+
+    <div class="gn" id="gn-cloudfarm" style="left:82%;top:71%" onclick="openM('cloudfarm')">
+      <img class="infra" src="img/cloudfarm.jpg" alt="Облачные фермы">
+      <div class="gn-t infra">Облачные фермы</div>
+      <div class="gn-y">2020-е</div>
+    </div>
+
+  </div>
+  <div class="graph-legend">
+    <div class="gl-item"><div class="gl-dot" style="background:var(--gold)"></div><span style="color:var(--gold)">Функциональные (12)</span></div>
+    <div class="gl-item"><div class="gl-dot" style="background:var(--blue)"></div><span style="color:var(--blue)">Обеспечивающие (11)</span></div>
+  </div>
+</div>
+
+<div class="footer">
+  <p class="yr">1642 → 2026</p>
+  <p>384 года эволюции — от латунных шестерней до когнитивных архитектур</p>
+  <p class="st"><span style="color:var(--gold)">12</span> функциональных + <span style="color:var(--blue)">11</span> обеспечивающих = 23 компонента СРТ</p>
+  <p style="margin-top:1rem;font-style:italic;font-size:0.8rem">По мотивам лекций П. Г. Щедровицкого о системе разделения труда</p>
+</div>
+
+<div class="modal" id="modal" onclick="closeM()">
+  <div class="modal-inner" onclick="event.stopPropagation()">
+    <img id="mImg" src="">
+    <div class="modal-meta"><h3 id="mT"></h3><p id="mA"></p></div>
+  </div>
+</div>
+
+<script>
+const meta={
+"pascaline":{t:"Паскалина",a:"Блез Паскаль, 1642",l:"func",img:"img/pascaline.jpg"},
+"engine":{t:"Аналитическая машина",a:"Чарльз Бэббидж, 1830-е",l:"func",img:"img/engine.jpg"},
+"punchcard":{t:"Перфокарта Лавлейс",a:"Ада Лавлейс, 1840-е",l:"func",img:"img/punchcard.jpg"},
+"gauge":{t:"Концевые меры и микрометр",a:"К. Э. Иогансон, кон. XIX в.",l:"infra",img:"img/gauge.jpg"},
+"relay":{t:"Электромеханическое реле",a:"Элмон Строуджер, 1889",l:"func",img:"img/relay.jpg"},
+"oscilloscope":{t:"Осциллограф",a:"Карл Ф. Браун, 1897",l:"infra",img:"img/oscilloscope.jpg"},
+"vacuum_pump":{t:"Вакуумный насос",a:"Химическая промышленность, нач. XX в.",l:"infra",img:"img/vacuum_pump.jpg"},
+"triode":{t:"Вакуумный триод",a:"Ли де Форест, 1906",l:"func",img:"img/triode.jpg"},
+"powergrid":{t:"Энергосеть",a:"Индустриализация, 1920-е",l:"infra",img:"img/powergrid.jpg"},
+"multimeter":{t:"Мультиметр",a:"Индустрия диагностики, 1920-е",l:"infra",img:"img/multimeter.jpg"},
+"shannon":{t:"Схемы Шеннона",a:"Клод Шеннон, 1938",l:"func",img:"img/shannon.jpg"},
+"neuron":{t:"Математический нейрон",a:"Мак-Каллок & Питтс, 1943",l:"func",img:"img/neuron.jpg"},
+"compiler":{t:"Компиляторы и ЯВУ",a:"Грейс Хоппер, Деннис Ритчи, 1960-е",l:"infra",img:"img/compiler.jpg"},
+"photolithography":{t:"Фотолитография",a:"ASML и предшественники, 1970-е",l:"infra",img:"img/photolithography.jpg"},
+"backprop":{t:"Backpropagation",a:"Хинтон, Румельхарт, Уильямс, 1986",l:"func",img:"img/backprop.jpg"},
+"cnn":{t:"Свёртка (CNN)",a:"Ян ЛеКун, 1998",l:"func",img:"img/cnn.jpg"},
+"relu":{t:"ReLU",a:"Нэйр, Хинтон, ~2010",l:"func",img:"img/relu.jpg"},
+"cuda":{t:"NVIDIA CUDA",a:"NVIDIA, 2006",l:"infra",img:"img/cuda.jpg"},
+"bigdata":{t:"Интернет и Big Data",a:"Web 2.0, 2000-е",l:"infra",img:"img/bigdata.jpg"},
+"attention":{t:"Self-Attention",a:"Васвани и др., 2017",l:"func",img:"img/attention.jpg"},
+"rlhf":{t:"RLHF",a:"OpenAI, Anthropic, 2022",l:"func",img:"img/rlhf.jpg"},
+"hbm":{t:"HBM память",a:"SK Hynix, Samsung, 2010-е",l:"infra",img:"img/hbm.jpg"},
+"cloudfarm":{t:"Облачные фермы",a:"Azure, AWS, Google, 2020-е",l:"infra",img:"img/cloudfarm.jpg"},
+};
+const edges=[
+{f:"pascaline",t:"engine",e:"gold"},
+{f:"engine",t:"punchcard",e:"gold"},
+{f:"engine",t:"relay",e:"gold"},
+{f:"relay",t:"triode",e:"gold"},
+{f:"relay",t:"shannon",e:"gold"},
+{f:"shannon",t:"neuron",e:"gold"},
+{f:"engine",t:"gauge",e:"mix"},
+{f:"relay",t:"oscilloscope",e:"mix"},
+{f:"gauge",t:"relay",e:"mix"},
+{f:"vacuum_pump",t:"triode",e:"mix"},
+{f:"oscilloscope",t:"shannon",e:"mix"},
+{f:"powergrid",t:"shannon",e:"mix"},
+{f:"multimeter",t:"neuron",e:"mix"},
+{f:"gauge",t:"vacuum_pump",e:"blue"},
+{f:"oscilloscope",t:"powergrid",e:"blue"},
+{f:"powergrid",t:"multimeter",e:"blue"},
+{f:"neuron",t:"backprop",e:"gold"},
+{f:"photolithography",t:"backprop",e:"mix"},
+{f:"punchcard",t:"compiler",e:"mix"},
+{f:"multimeter",t:"compiler",e:"blue"},
+{f:"vacuum_pump",t:"photolithography",e:"blue"},
+{f:"gauge",t:"photolithography",e:"blue"},
+{f:"backprop",t:"cnn",e:"gold"},
+{f:"backprop",t:"relu",e:"gold"},
+{f:"cnn",t:"relu",e:"gold"},
+{f:"photolithography",t:"cuda",e:"blue"},
+{f:"compiler",t:"cuda",e:"blue"},
+{f:"bigdata",t:"cnn",e:"mix"},
+{f:"cuda",t:"cnn",e:"mix"},
+{f:"relu",t:"attention",e:"gold"},
+{f:"cnn",t:"attention",e:"gold"},
+{f:"cuda",t:"attention",e:"mix"},
+{f:"bigdata",t:"attention",e:"mix"},
+{f:"attention",t:"rlhf",e:"gold"},
+{f:"cuda",t:"hbm",e:"blue"},
+{f:"cloudfarm",t:"rlhf",e:"mix"},
+{f:"hbm",t:"attention",e:"mix"},
+{f:"powergrid",t:"cloudfarm",e:"blue"},
+{f:"cuda",t:"cloudfarm",e:"blue"},
+];
+function drawEdges(){
+  const svg=document.getElementById('gSvg');
+  const box=document.getElementById('gBox');
+  const r=box.getBoundingClientRect();
+  svg.querySelectorAll('line').forEach(l=>l.remove());
+  edges.forEach(e=>{
+    const f=document.getElementById('gn-'+e.f);
+    const t=document.getElementById('gn-'+e.t);
+    if(!f||!t)return;
+    const fr=f.getBoundingClientRect(), tr=t.getBoundingClientRect();
+    const x1=fr.left+fr.width/2-r.left, y1=fr.top+fr.height/2-r.top;
+    const x2=tr.left+tr.width/2-r.left, y2=tr.top+tr.height/2-r.top;
+    const l=document.createElementNS('http://www.w3.org/2000/svg','line');
+    l.setAttribute('x1',x1);l.setAttribute('y1',y1);
+    l.setAttribute('x2',x2);l.setAttribute('y2',y2);
+    if(e.e==='gold'){
+      l.setAttribute('stroke','rgba(201,168,76,0.35)');
+      l.setAttribute('marker-end','url(#aGold)');
+    } else if(e.e==='blue'){
+      l.setAttribute('stroke','rgba(74,158,255,0.35)');
+      l.setAttribute('marker-end','url(#aBlue)');
+    } else {
+      l.setAttribute('stroke','rgba(140,140,140,0.3)');
+      l.setAttribute('stroke-dasharray','6,4');
+      l.setAttribute('marker-end','url(#aMix)');
+    }
+    l.setAttribute('stroke-width','1.5');
+    svg.appendChild(l);
+  });
+}
+const obs=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+},{threshold:0.1});
+document.querySelectorAll('.tl-node').forEach(n=>obs.observe(n));
+function openM(id){
+  const m=meta[id];if(!m)return;
+  document.getElementById('mImg').src=m.img;
+  document.getElementById('mT').textContent=m.t;
+  document.getElementById('mA').textContent=m.a;
+  document.getElementById('modal').classList.add('on');
+}
+function closeM(){document.getElementById('modal').classList.remove('on');}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeM();});
+window.addEventListener('load',()=>setTimeout(drawEdges,300));
+window.addEventListener('resize',drawEdges);
+</script>
+</body></html>
