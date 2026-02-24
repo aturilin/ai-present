@@ -265,6 +265,1153 @@
     .tl-dot { left: 20px; }
     .explain-grid { grid-template-columns: 1fr; }
   }
+
+  /* === Narrative Bridge === */
+  .narrative-bridge {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 2rem 2rem 1rem;
+    font-size: 1.2rem;
+    color: var(--text-dim);
+    font-style: italic;
+    line-height: 1.7;
+    border-top: 1px solid rgba(201,168,76,0.08);
+  }
+
+  /* ============================================================
+     SECTION 2: Evolution of the concept "machine"
+     ============================================================ */
+
+  .evol-hdr {
+    padding-top: 5rem;
+    padding-bottom: 2rem;
+  }
+
+  .stairs-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 1rem 2rem 3rem;
+  }
+
+  .stair {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  }
+
+  .stair.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .stair-1 { margin-left: 0; }
+  .stair-2 { margin-left: 4rem; }
+  .stair-3 { margin-left: 8rem; }
+  .stair-4 { margin-left: 12rem; }
+  .stair-5 { margin-left: 16rem; }
+
+  .stair-inner {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    padding: 1.8rem 2rem;
+    border-left: 3px solid var(--gold-dim);
+    background: rgba(18, 18, 26, 0.4);
+    border-radius: 0 12px 12px 0;
+    transition: background 0.3s, border-color 0.3s;
+  }
+
+  .stair-inner:hover {
+    background: rgba(18, 18, 26, 0.65);
+    border-left-color: var(--gold);
+  }
+
+  .stair-visual {
+    flex-shrink: 0;
+    width: 160px;
+  }
+
+  .stair-visual img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid var(--gold-dim);
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+
+  .stair-inner:hover .stair-visual img {
+    border-color: var(--gold);
+    box-shadow: 0 0 20px rgba(201, 168, 76, 0.2);
+  }
+
+  .stair-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .stair-numeral {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--gold-dim);
+    letter-spacing: 0.15em;
+    margin-bottom: 0.2rem;
+  }
+
+  .stair-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 0.15rem;
+    line-height: 1.2;
+  }
+
+  .stair-era {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.7rem;
+  }
+
+  .stair-definition {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.15rem;
+    color: var(--text);
+    line-height: 1.55;
+    margin-bottom: 0.8rem;
+  }
+
+  .stair-examples {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .stair-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--gold);
+    background: rgba(201, 168, 76, 0.08);
+    padding: 4px 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(201, 168, 76, 0.15);
+    white-space: nowrap;
+    transition: background 0.3s, border-color 0.3s;
+  }
+
+  .stair-inner:hover .stair-badge {
+    background: rgba(201, 168, 76, 0.14);
+    border-color: rgba(201, 168, 76, 0.3);
+  }
+
+  .stair-insight {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--text-dim);
+    padding-left: 0.8rem;
+    border-left: 2px solid var(--gold-dim);
+    line-height: 1.5;
+  }
+
+  .stair-transition {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.8rem 0 0.8rem 1.5rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+  }
+
+  .stair-transition.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .stair-transition[data-step="1.5"] { margin-left: 2rem; }
+  .stair-transition[data-step="2.5"] { margin-left: 6rem; }
+  .stair-transition[data-step="3.5"] { margin-left: 10rem; }
+  .stair-transition[data-step="4.5"] { margin-left: 14rem; }
+
+  .stair-transition-line {
+    width: 30px;
+    height: 2px;
+    background: linear-gradient(to right, var(--gold-dim), transparent);
+    flex-shrink: 0;
+  }
+
+  .stair-transition-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    color: var(--gold-dim);
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+
+  .evol-formula {
+    max-width: 1100px;
+    margin: 2rem auto 3rem;
+    padding: 0 2rem;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+
+  .evol-formula.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .evol-formula-inner {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 1.2rem 2.5rem;
+    background: rgba(18, 18, 26, 0.6);
+    border: 1px solid rgba(201, 168, 76, 0.15);
+    border-radius: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .evol-formula-step {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1rem;
+    color: var(--text-dim);
+    padding: 4px 12px;
+    border-radius: 8px;
+    transition: color 0.3s, background 0.3s;
+  }
+
+  .evol-formula-step.active {
+    color: var(--gold);
+    background: rgba(201, 168, 76, 0.12);
+    font-weight: 600;
+  }
+
+  .evol-formula-arrow {
+    font-size: 1.1rem;
+    color: var(--gold-dim);
+  }
+
+  .evol-formula-caption {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1rem;
+    color: var(--text-dim);
+    font-style: italic;
+    margin-top: 0.8rem;
+  }
+
+  @media (max-width: 900px) {
+    .stair-1, .stair-2, .stair-3, .stair-4, .stair-5 { margin-left: 0; }
+    .stair-transition[data-step="1.5"],
+    .stair-transition[data-step="2.5"],
+    .stair-transition[data-step="3.5"],
+    .stair-transition[data-step="4.5"] { margin-left: 0; }
+    .stair-inner { flex-direction: column; padding: 1.4rem 1.2rem; }
+    .stair-visual { width: 100%; }
+    .stair-visual img { width: 100%; height: 140px; }
+    .stairs-container { padding: 1rem 1rem 2rem; }
+    .evol-formula-inner { padding: 1rem 1.2rem; gap: 0.4rem; }
+    .evol-formula-step { font-size: 0.85rem; padding: 3px 8px; }
+  }
+
+  @media (max-width: 600px) {
+    .stair-title { font-size: 1.4rem; }
+    .stair-definition { font-size: 1.05rem; }
+    .stair-badge { font-size: 0.78rem; padding: 3px 10px; }
+  }
+
+  /* ============================================================
+     SECTION 4: Communication Chain
+     ============================================================ */
+
+  .comm-chain-section {
+    padding: 2rem 2rem 5rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .comm-chain-wrap {
+    overflow-x: auto;
+    padding: 2rem 0;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .comm-chain {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0;
+    min-width: min-content;
+    padding: 1rem 2rem;
+  }
+
+  .comm-node {
+    width: 200px;
+    min-width: 200px;
+    background: rgba(18, 18, 26, 0.6);
+    border: 1px solid rgba(201, 168, 76, 0.15);
+    border-radius: 12px;
+    padding: 0;
+    cursor: pointer;
+    transition: border-color 0.4s, box-shadow 0.4s, transform 0.4s;
+    position: relative;
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+
+  .comm-node.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .comm-node:hover {
+    border-color: var(--gold);
+    box-shadow: 0 0 24px rgba(201, 168, 76, 0.15);
+    transform: translateY(-4px);
+  }
+
+  .comm-node.visible:hover {
+    transform: translateX(0) translateY(-4px);
+  }
+
+  .comm-node.expanded {
+    border-color: var(--gold);
+    box-shadow: 0 0 30px rgba(201, 168, 76, 0.2);
+  }
+
+  .comm-node-img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 11px 11px 0 0;
+    display: block;
+  }
+
+  .comm-node-body {
+    padding: 0.8rem 1rem 1rem;
+  }
+
+  .comm-badge {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    padding: 3px 10px;
+    border-radius: 10px;
+    margin-bottom: 0.5rem;
+  }
+
+  .comm-badge.encoding { background: rgba(201,168,76,0.2); color: var(--gold); }
+  .comm-badge.network { background: rgba(74,158,255,0.2); color: var(--blue); }
+  .comm-badge.binary { background: rgba(168,130,255,0.2); color: #a882ff; }
+  .comm-badge.formalization { background: rgba(76,201,168,0.2); color: #4cc9a8; }
+  .comm-badge.decoding { background: rgba(255,130,100,0.2); color: #ff8264; }
+
+  .comm-node-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--gold);
+    margin-bottom: 0.15rem;
+    line-height: 1.2;
+  }
+
+  .comm-node-year {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    margin-bottom: 0.4rem;
+  }
+
+  .comm-node-brief {
+    font-size: 0.95rem;
+    color: var(--text-dim);
+    line-height: 1.4;
+    font-style: italic;
+  }
+
+  .comm-desc {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.4s ease,
+                padding 0.4s ease;
+    opacity: 0;
+    padding: 0 1rem;
+    background: rgba(201, 168, 76, 0.03);
+    border-top: 1px solid rgba(201, 168, 76, 0.08);
+    border-radius: 0 0 11px 11px;
+  }
+
+  .comm-node.expanded .comm-desc {
+    max-height: 300px;
+    opacity: 1;
+    padding: 0.8rem 1rem 1rem;
+  }
+
+  .comm-desc p {
+    font-size: 0.95rem;
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  .comm-expand-hint {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--gold-dim);
+    text-align: center;
+    margin-top: 0.5rem;
+    transition: opacity 0.3s;
+  }
+
+  .comm-node.expanded .comm-expand-hint {
+    opacity: 0.4;
+  }
+
+  .comm-arrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 80px;
+    padding: 0 0.2rem;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    align-self: center;
+  }
+
+  .comm-arrow.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .comm-arrow-line {
+    width: 50px;
+    height: 2px;
+    background: linear-gradient(to right, var(--gold-dim), var(--gold));
+    position: relative;
+  }
+
+  .comm-arrow-line::after {
+    content: '';
+    position: absolute;
+    right: -2px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0; height: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 8px solid var(--gold);
+  }
+
+  .comm-arrow-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--gold-dim);
+    text-align: center;
+    margin-top: 0.4rem;
+    line-height: 1.3;
+    max-width: 90px;
+    letter-spacing: 0.03em;
+  }
+
+  .comm-thesis {
+    margin-top: 3rem;
+    padding: 2rem 2.5rem;
+    background: rgba(18, 18, 26, 0.6);
+    border: 1px solid rgba(201, 168, 76, 0.15);
+    border-radius: 12px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .comm-thesis.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .comm-thesis-diagram {
+    text-align: center;
+    margin-bottom: 1.2rem;
+    padding-bottom: 1.2rem;
+    border-bottom: 1px solid rgba(201, 168, 76, 0.1);
+  }
+
+  .comm-thesis-diagram .shannon-chain {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .shannon-block {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-weight: 600;
+  }
+
+  .shannon-block.source { background: rgba(201,168,76,0.15); color: var(--gold); }
+  .shannon-block.encoder { background: rgba(168,130,255,0.15); color: #a882ff; }
+  .shannon-block.channel { background: rgba(74,158,255,0.15); color: var(--blue); }
+  .shannon-block.decoder { background: rgba(255,130,100,0.15); color: #ff8264; }
+  .shannon-block.receiver { background: rgba(76,201,168,0.15); color: #4cc9a8; }
+
+  .shannon-arr {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    color: var(--gold-dim);
+  }
+
+  .comm-thesis-text {
+    font-size: 1.2rem;
+    color: var(--text);
+    line-height: 1.7;
+    text-align: center;
+    font-style: italic;
+  }
+
+  .comm-thesis-text strong {
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  @media (max-width: 1100px) {
+    .comm-chain {
+      flex-direction: column;
+      align-items: center;
+      padding: 1rem;
+    }
+    .comm-node {
+      width: 320px;
+      min-width: unset;
+      max-width: 90vw;
+      transform: translateY(30px);
+    }
+    .comm-node.visible { transform: translateY(0); }
+    .comm-node.visible:hover { transform: translateY(-4px); }
+    .comm-arrow {
+      transform: rotate(90deg) translateX(-10px);
+      min-width: unset;
+      min-height: 50px;
+    }
+    .comm-arrow.visible { transform: rotate(90deg) translateX(0); }
+    .comm-node-img { height: 160px; }
+  }
+
+  @media (max-width: 500px) {
+    .comm-node { width: 95vw; }
+    .comm-thesis { padding: 1.5rem; }
+    .comm-thesis-text { font-size: 1.05rem; }
+    .shannon-block { font-size: 0.7rem; padding: 3px 8px; }
+  }
+
+  /* ============================================================
+     SECTION 1: Three Programs of AI
+     ============================================================ */
+
+  .programs-section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  .programs-intro {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 2.5rem;
+    font-size: 1.2rem;
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+
+  .programs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .program-card {
+    padding: 2rem;
+    border-radius: 12px;
+    background: rgba(18,18,26,0.6);
+    border: 1px solid rgba(201,168,76,0.15);
+    cursor: pointer;
+    transition: border-color 0.4s, box-shadow 0.4s, transform 0.3s;
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  .program-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .program-card:nth-child(1) { transition-delay: 0s; }
+  .program-card:nth-child(2) { transition-delay: 0.15s; }
+  .program-card:nth-child(3) { transition-delay: 0.3s; }
+
+  .program-card:hover {
+    border-color: var(--gold);
+    box-shadow: 0 0 30px rgba(201,168,76,0.15);
+  }
+
+  .program-card.expanded {
+    border-color: var(--gold);
+    box-shadow: 0 0 40px rgba(201,168,76,0.12);
+  }
+
+  .program-card-img {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 1.2rem;
+    border: 1px solid rgba(201,168,76,0.12);
+    transition: border-color 0.4s, box-shadow 0.4s;
+  }
+
+  .program-card:hover .program-card-img,
+  .program-card.expanded .program-card-img {
+    border-color: var(--gold-dim);
+    box-shadow: 0 0 20px rgba(201,168,76,0.1);
+  }
+
+  .program-icon {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 2rem;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 0.6rem;
+    display: block;
+  }
+
+  .program-name {
+    font-size: 1.5rem;
+    color: var(--gold);
+    font-weight: 700;
+    margin: 0.5rem 0 0.2rem;
+    line-height: 1.2;
+  }
+
+  .program-subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    color: var(--gold-dim);
+    letter-spacing: 0.15em;
+    margin-bottom: 0.8rem;
+  }
+
+  .program-brief {
+    font-size: 1.15rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .expand-hint {
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    opacity: 0.5;
+    margin-top: 0.5rem;
+    transition: opacity 0.3s;
+  }
+
+  .program-card.expanded .expand-hint {
+    opacity: 0;
+    height: 0;
+    margin: 0;
+    overflow: hidden;
+  }
+
+  .program-detail {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.6s ease;
+  }
+
+  .program-card.expanded .program-detail {
+    max-height: 800px;
+  }
+
+  .program-detail ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .program-detail ul li {
+    padding: 0.5rem 0 0.5rem 1rem;
+    border-left: 2px solid var(--gold-dim);
+    margin-bottom: 0.5rem;
+    font-size: 1.05rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  .program-detail ul li strong {
+    color: var(--text);
+  }
+
+  .program-schema {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--gold-dim);
+    padding: 6px 12px;
+    background: rgba(201,168,76,0.06);
+    border-radius: 6px;
+    display: inline-block;
+    margin-top: 0.8rem;
+  }
+
+  .program-formula {
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--text);
+    margin-top: 1rem;
+    padding-top: 0.8rem;
+    border-top: 1px solid rgba(201,168,76,0.1);
+  }
+
+  .programs-contrast-wrap {
+    max-width: 1100px;
+    margin: 3rem auto 0;
+    padding: 0 2rem;
+  }
+
+  .programs-contrast-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    color: var(--gold-dim);
+    letter-spacing: 0.15em;
+    text-align: center;
+    margin-bottom: 1.2rem;
+  }
+
+  .programs-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+  }
+
+  .programs-table th {
+    text-align: left;
+    padding: 0.8rem 1.2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--gold);
+    border-bottom: 2px solid var(--gold-dim);
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.05em;
+  }
+
+  .programs-table td {
+    padding: 0.8rem 1.2rem;
+    font-size: 1.05rem;
+    line-height: 1.5;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    color: var(--text-dim);
+    vertical-align: top;
+  }
+
+  .programs-table tr:hover td {
+    color: var(--text);
+    background: rgba(201,168,76,0.03);
+  }
+
+  .programs-table td:first-child {
+    color: var(--text);
+    font-weight: 600;
+    width: 18%;
+  }
+
+  .programs-quote {
+    max-width: 850px;
+    margin: 3rem auto 2rem;
+    padding: 1.4rem 2rem;
+    background: rgba(201,168,76,0.06);
+    border-left: 4px solid var(--gold-dim);
+    border-radius: 0 8px 8px 0;
+    text-align: left;
+  }
+
+  .programs-quote p {
+    font-size: 1.2rem;
+    font-style: italic;
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+
+  .programs-quote .quote-src {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--gold-dim);
+    margin-top: 0.8rem;
+    font-style: normal;
+  }
+
+  @media (max-width: 900px) {
+    .programs-grid { grid-template-columns: 1fr; }
+    .programs-table { font-size: 0.95rem; }
+    .programs-table th, .programs-table td { padding: 0.6rem 0.8rem; }
+    .programs-quote { margin: 2rem 1rem; padding: 1rem 1.2rem; }
+  }
+
+  @media (max-width: 600px) {
+    .programs-section { padding: 1rem; }
+    .program-name { font-size: 1.3rem; }
+    .programs-table td:first-child { width: auto; }
+  }
+
+  /* ============================================================
+     SECTION 5: Scheme of Mental Activity (MD)
+     ============================================================ */
+
+  .md-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  .md-intro {
+    text-align: center;
+    max-width: 850px;
+    margin: 0 auto 3rem;
+  }
+
+  .md-intro p {
+    font-size: 1.25rem;
+    color: var(--text-dim);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .md-hero-img {
+    width: 100%;
+    max-width: 680px;
+    border-radius: 12px;
+    margin: 0 auto;
+    display: block;
+    border: 1px solid rgba(201,168,76,0.15);
+    opacity: 0.85;
+    transition: opacity 0.4s;
+  }
+
+  .md-hero-img:hover { opacity: 1; }
+
+  .md-diagram {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin: 2rem 0 3rem;
+  }
+
+  .md-arrows-left, .md-arrows-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    flex-shrink: 0;
+    position: relative;
+  }
+
+  .md-arrows-left::before, .md-arrows-right::before {
+    content: '';
+    position: absolute;
+    top: 10%;
+    bottom: 10%;
+    width: 2px;
+  }
+
+  .md-arrows-left::before {
+    background: linear-gradient(to top, rgba(74,158,255,0.2), rgba(160,120,200,0.4), rgba(201,168,76,0.6));
+  }
+
+  .md-arrows-right::before {
+    background: linear-gradient(to bottom, rgba(201,168,76,0.2), rgba(160,120,200,0.4), rgba(74,158,255,0.6));
+  }
+
+  .md-arrows-left::after {
+    content: '';
+    position: absolute;
+    top: 6%;
+    width: 0; height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 10px solid rgba(201,168,76,0.6);
+  }
+
+  .md-arrows-right::after {
+    content: '';
+    position: absolute;
+    bottom: 6%;
+    width: 0; height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 10px solid rgba(74,158,255,0.6);
+  }
+
+  .md-arrow-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    writing-mode: vertical-lr;
+    text-orientation: mixed;
+    letter-spacing: 0.1em;
+    opacity: 0.7;
+  }
+
+  .md-arrows-left .md-arrow-label { transform: rotate(180deg); }
+
+  .md-layers {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .md-layer {
+    display: grid;
+    grid-template-columns: 80px 1fr 220px;
+    gap: 1.2rem;
+    align-items: start;
+    padding: 1.6rem 1.8rem;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease, border-color 0.4s, box-shadow 0.4s;
+  }
+
+  .md-layer.visible { opacity: 1; transform: translateY(0); }
+
+  .md-layer:nth-child(3).visible { transition-delay: 0s; }
+  .md-layer:nth-child(2).visible { transition-delay: 0.4s; }
+  .md-layer:nth-child(1).visible { transition-delay: 0.8s; }
+
+  .md-thinking { background: rgba(201,168,76,0.08); border-color: rgba(201,168,76,0.25); }
+  .md-thinking:hover { border-color: rgba(201,168,76,0.45); box-shadow: 0 0 30px rgba(201,168,76,0.1); }
+  .md-comm { background: rgba(160,120,200,0.06); border-color: rgba(160,120,200,0.2); }
+  .md-comm:hover { border-color: rgba(160,120,200,0.4); box-shadow: 0 0 30px rgba(160,120,200,0.1); }
+  .md-action { background: rgba(74,158,255,0.06); border-color: rgba(74,158,255,0.2); }
+  .md-action:hover { border-color: rgba(74,158,255,0.4); box-shadow: 0 0 30px rgba(74,158,255,0.1); }
+
+  .md-layer-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 2.5rem;
+    font-weight: 600;
+    line-height: 1;
+    align-self: center;
+    text-align: center;
+  }
+
+  .md-thinking .md-layer-label { color: var(--gold); }
+  .md-comm .md-layer-label { color: #a078c8; }
+  .md-action .md-layer-label { color: var(--blue); }
+
+  .md-layer-body { min-width: 0; }
+
+  .md-layer-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+    line-height: 1.3;
+  }
+
+  .md-thinking .md-layer-title { color: var(--gold); }
+  .md-comm .md-layer-title { color: #b090d0; }
+  .md-action .md-layer-title { color: var(--blue); }
+
+  .md-layer-def {
+    font-size: 1.1rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+    margin-bottom: 0.6rem;
+  }
+
+  .md-layer-program {
+    font-size: 1.05rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+    margin-bottom: 0.4rem;
+  }
+
+  .md-program-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    margin-right: 0.3rem;
+  }
+
+  .md-thinking .md-program-tag { color: var(--gold-dim); }
+  .md-comm .md-program-tag { color: #8a6cb8; }
+  .md-action .md-program-tag { color: var(--blue-dim); }
+
+  .md-layer-status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    letter-spacing: 0.05em;
+    margin-top: 0.5rem;
+    padding: 4px 10px;
+    border-radius: 4px;
+    display: inline-block;
+  }
+
+  .md-thinking .md-layer-status { color: var(--gold); background: rgba(201,168,76,0.1); }
+  .md-comm .md-layer-status { color: #b090d0; background: rgba(160,120,200,0.1); }
+  .md-action .md-layer-status { color: var(--blue); background: rgba(74,158,255,0.1); }
+
+  .md-layer-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    align-content: start;
+    align-self: center;
+  }
+
+  .md-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    padding: 4px 10px;
+    border-radius: 6px;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+    line-height: 1.4;
+  }
+
+  .md-badge-gold { color: var(--gold); background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.2); }
+  .md-badge-purple { color: #b090d0; background: rgba(160,120,200,0.1); border: 1px solid rgba(160,120,200,0.2); }
+  .md-badge-blue { color: var(--blue); background: rgba(74,158,255,0.1); border: 1px solid rgba(74,158,255,0.2); }
+
+  .md-partial { font-size: 0.7rem; opacity: 0.6; }
+
+  .md-quote {
+    max-width: 850px;
+    margin: 2rem auto;
+    padding: 1.4rem 2rem;
+    background: rgba(201,168,76,0.06);
+    border-left: 4px solid var(--gold-dim);
+    border-radius: 0 8px 8px 0;
+  }
+
+  .md-quote p { font-size: 1.2rem; font-style: italic; color: var(--text-dim); line-height: 1.7; }
+
+  .md-quote-src {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--gold-dim);
+    margin-top: 0.8rem;
+  }
+
+  .md-conclusion {
+    max-width: 850px;
+    margin: 0 auto 2rem;
+    text-align: center;
+    padding: 1.5rem 2rem;
+  }
+
+  .md-conclusion p { font-size: 1.3rem; color: var(--text); line-height: 1.7; }
+
+  @media (max-width: 900px) {
+    .md-layer { grid-template-columns: 60px 1fr; gap: 0.8rem; }
+    .md-layer-tech { grid-column: 1 / -1; margin-top: 0.3rem; }
+    .md-layer-label { font-size: 2rem; }
+    .md-arrows-left, .md-arrows-right { display: none; }
+    .md-diagram { margin: 1.5rem 0 2rem; }
+    .md-quote { margin: 1.5rem 1rem; padding: 1rem 1.2rem; }
+  }
+
+  @media (max-width: 600px) {
+    .md-wrap { padding: 1rem; }
+    .md-layer { grid-template-columns: 1fr; text-align: center; padding: 1.2rem; }
+    .md-layer-label { font-size: 1.8rem; }
+    .md-layer-title { font-size: 1.2rem; }
+    .md-layer-tech { justify-content: center; }
+    .md-conclusion p { font-size: 1.1rem; }
+    .md-intro p { font-size: 1.1rem; }
+  }
+
+  /* ============================================================
+     SECTION 3: Weak Link Principle
+     ============================================================ */
+
+  .weaklink-intro {
+    max-width: 900px;
+    margin: 0 auto 2.5rem;
+    text-align: center;
+  }
+  .weaklink-intro h3 { font-size: 2rem; color: var(--gold); margin-bottom: 0.6rem; font-weight: 700; }
+  .weaklink-intro .wl-subtitle { font-size: 1.15rem; color: var(--text-dim); font-style: italic; line-height: 1.6; max-width: 700px; margin: 0 auto; }
+  .weaklink-intro .wl-hero-img { width: 100%; max-width: 600px; border-radius: 12px; margin: 1.5rem auto 0; display: block; border: 1px solid rgba(201,168,76,0.15); opacity: 0.85; transition: opacity 0.4s; }
+  .weaklink-intro .wl-hero-img:hover { opacity: 1; }
+
+  .chain-wrap { max-width: 1100px; margin: 0 auto 3rem; display: flex; flex-direction: column; gap: 3rem; }
+
+  .chain-example { background: rgba(18,18,26,0.5); border: 1px solid rgba(201,168,76,0.1); border-radius: 14px; padding: 2rem 2rem 1.6rem; opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .chain-example.visible { opacity: 1; transform: translateY(0); }
+  .chain-example .chain-title { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--gold-dim); letter-spacing: 0.15em; margin-bottom: 1.2rem; text-transform: uppercase; }
+
+  .chain-row { display: flex; align-items: center; justify-content: center; gap: 0; flex-wrap: nowrap; margin-bottom: 1.2rem; }
+
+  .chain-node { display: flex; flex-direction: column; align-items: center; text-align: center; cursor: pointer; transition: transform 0.3s; flex-shrink: 0; width: 100px; }
+  .chain-node:hover { transform: scale(1.1); z-index: 2; }
+  .chain-node img { width: 70px; height: 44px; object-fit: cover; border-radius: 8px; border: 2px solid var(--gold-dim); transition: border-color 0.3s, box-shadow 0.3s; }
+  .chain-node:hover img { border-color: var(--gold); box-shadow: 0 0 16px rgba(201,168,76,0.35); }
+  .chain-node img.infra { border-color: var(--blue-dim); }
+  .chain-node:hover img.infra { border-color: var(--blue); box-shadow: 0 0 16px rgba(74,158,255,0.35); }
+
+  .chain-node.weak-link img { border-color: #e8a44c; box-shadow: 0 0 10px rgba(232,164,76,0.25); }
+  .chain-node.weak-link:hover img { border-color: #f0b060; box-shadow: 0 0 20px rgba(232,164,76,0.45); }
+  .chain-node.new-constraint img { border: 2px dashed #e8a44c; }
+  .chain-node.new-constraint:hover img { border-color: #f0b060; box-shadow: 0 0 16px rgba(232,164,76,0.35); }
+
+  .chain-node .cn-label { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; margin-top: 4px; line-height: 1.2; color: var(--text-dim); max-width: 90px; }
+  .chain-node.weak-link .cn-label { color: #e8a44c; }
+
+  .chain-arrow { display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0; width: 60px; position: relative; }
+  .chain-arrow::before { content: ''; display: block; width: 36px; height: 2px; background: var(--gold-dim); }
+  .chain-arrow::after { content: ''; display: block; width: 0; height: 0; border-top: 5px solid transparent; border-bottom: 5px solid transparent; border-left: 8px solid var(--gold-dim); position: absolute; right: 8px; top: 50%; transform: translateY(-50%); }
+  .chain-arrow .chain-arrow-label { font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; color: var(--gold-dim); position: absolute; top: -14px; white-space: nowrap; letter-spacing: 0.05em; }
+
+  .chain-explain { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-top: 0.5rem; }
+  .chain-explain-item { padding: 0.8rem 1rem; border-radius: 8px; font-size: 0.95rem; line-height: 1.5; color: var(--text-dim); }
+  .chain-explain-item.weak { background: rgba(232,164,76,0.06); border: 1px solid rgba(232,164,76,0.15); }
+  .chain-explain-item.weak .ce-tag { color: #e8a44c; }
+  .chain-explain-item.answer { background: rgba(74,158,255,0.06); border: 1px solid rgba(74,158,255,0.15); }
+  .chain-explain-item.answer .ce-tag { color: var(--blue); }
+  .chain-explain-item.next { background: rgba(232,164,76,0.04); border: 1px dashed rgba(232,164,76,0.2); }
+  .chain-explain-item.next .ce-tag { color: #e8a44c; font-style: italic; }
+  .chain-explain-item .ce-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 0.1em; margin-bottom: 0.3rem; text-transform: uppercase; }
+
+  .weaklink-bridge { max-width: 900px; margin: 0 auto; text-align: center; padding: 1.5rem 2rem; font-size: 1.15rem; color: var(--text-dim); font-style: italic; line-height: 1.7; }
+
+  @media (max-width: 900px) {
+    .chain-row { flex-direction: column; gap: 0.5rem; }
+    .chain-arrow { width: auto; height: 30px; transform: rotate(90deg); }
+    .chain-explain { grid-template-columns: 1fr; }
+    .chain-node { width: auto; }
+    .weaklink-intro h3 { font-size: 1.6rem; }
+  }
+
 </style>
 </head>
 <body>
@@ -299,6 +1446,165 @@
     </div>
   </div>
   <div class="scroll-hint"><div class="arrow"></div></div>
+</div>
+
+<!-- === Section 2: Evolution of the concept "machine" === -->
+
+<div class="section-hdr evol-hdr">
+  <h2>Эволюция понятия &laquo;машина&raquo;</h2>
+  <p>5 ступеней &mdash; от усиления силы к обучению</p>
+</div>
+
+<div class="stairs-container">
+
+  <!-- Stair I -->
+  <div class="stair stair-1" data-step="1">
+    <div class="stair-inner">
+      <div class="stair-visual">
+        <img src="img/evol_1_force.jpg" alt="Машина силы" loading="lazy">
+      </div>
+      <div class="stair-content">
+        <div class="stair-numeral">I</div>
+        <h3 class="stair-title">Машина силы</h3>
+        <div class="stair-era">Античность</div>
+        <p class="stair-definition">Устройство, преобразующее и&nbsp;усиливающее мускульное усилие. Машина = умножитель&nbsp;силы.</p>
+        <div class="stair-examples">
+          <span class="stair-badge">Рычаг</span>
+          <span class="stair-badge">Ворот</span>
+          <span class="stair-badge">Полиспаст</span>
+        </div>
+        <p class="stair-insight">&laquo;Впервые сила отделяется от&nbsp;тела&raquo;</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stair-transition" data-step="1.5">
+    <div class="stair-transition-line"></div>
+    <p class="stair-transition-text">Нужна кинематика</p>
+  </div>
+
+  <!-- Stair II -->
+  <div class="stair stair-2" data-step="2">
+    <div class="stair-inner">
+      <div class="stair-visual">
+        <img src="img/evol_2_movement.jpg" alt="Машина движения" loading="lazy">
+      </div>
+      <div class="stair-content">
+        <div class="stair-numeral">II</div>
+        <h3 class="stair-title">Машина движения</h3>
+        <div class="stair-era">XVIII век, Монж</div>
+        <p class="stair-definition">Механизм, преобразующий одно движение в&nbsp;другое. Неважно, что&nbsp;именно крутит колесо &mdash; важна передача.</p>
+        <div class="stair-examples">
+          <span class="stair-badge">Паровая машина</span>
+          <span class="stair-badge">Зубчатые передачи</span>
+          <span class="stair-badge">Кинематические пары</span>
+        </div>
+        <p class="stair-insight">&laquo;Неважно что&nbsp;крутит колесо&raquo;</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stair-transition" data-step="2.5">
+    <div class="stair-transition-line"></div>
+    <p class="stair-transition-text">Нужна программа</p>
+  </div>
+
+  <!-- Stair III -->
+  <div class="stair stair-3" data-step="3">
+    <div class="stair-inner">
+      <div class="stair-visual">
+        <img src="img/evol_3_operations.jpg" alt="Машина операций" loading="lazy">
+      </div>
+      <div class="stair-content">
+        <div class="stair-numeral">III</div>
+        <h3 class="stair-title">Машина операций</h3>
+        <div class="stair-era">1800&ndash;1840-е, Жаккард, Бэббидж</div>
+        <p class="stair-definition">Устройство, выполняющее последовательность шагов по&nbsp;заданной программе. Перфокарта отделяет замысел от&nbsp;исполнения.</p>
+        <div class="stair-examples">
+          <span class="stair-badge">Перфокарты</span>
+          <span class="stair-badge">Станок Жаккарда</span>
+          <span class="stair-badge">Аналитическая машина</span>
+        </div>
+        <p class="stair-insight">&laquo;Машина замещает внимание и&nbsp;выбор&raquo;</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stair-transition" data-step="3.5">
+    <div class="stair-transition-line"></div>
+    <p class="stair-transition-text">Координация остается человеческой</p>
+  </div>
+
+  <!-- Stair IV -->
+  <div class="stair stair-4" data-step="4">
+    <div class="stair-inner">
+      <div class="stair-visual">
+        <img src="img/evol_4_communication.jpg" alt="Машина коммуникации" loading="lazy">
+      </div>
+      <div class="stair-content">
+        <div class="stair-numeral">IV</div>
+        <h3 class="stair-title">Машина коммуникации</h3>
+        <div class="stair-era">XIX&ndash;XX вв., Морзе, Шеннон</div>
+        <p class="stair-definition">Система, передающая и&nbsp;кодирующая информацию. Сигнал отделяется от&nbsp;физического носителя.</p>
+        <div class="stair-examples">
+          <span class="stair-badge">Телеграф</span>
+          <span class="stair-badge">Код Морзе</span>
+          <span class="stair-badge">Теория информации</span>
+        </div>
+        <p class="stair-insight">&laquo;Информация отделяется от&nbsp;носителя&raquo;</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stair-transition" data-step="4.5">
+    <div class="stair-transition-line"></div>
+    <p class="stair-transition-text">Нужна самонастройка</p>
+  </div>
+
+  <!-- Stair V -->
+  <div class="stair stair-5" data-step="5">
+    <div class="stair-inner">
+      <div class="stair-visual">
+        <img src="img/evol_5_learning.jpg" alt="Машина обучения" loading="lazy">
+      </div>
+      <div class="stair-content">
+        <div class="stair-numeral">V</div>
+        <h3 class="stair-title">Машина обучения</h3>
+        <div class="stair-era">1958+, Розенблатт</div>
+        <p class="stair-definition">Система, модифицирующая собственное поведение на&nbsp;основе обратной связи. Перцептрон &mdash; первый шаг от&nbsp;исполнителя к&nbsp;ученику.</p>
+        <div class="stair-examples">
+          <span class="stair-badge">Перцептрон</span>
+          <span class="stair-badge">Backpropagation</span>
+          <span class="stair-badge">Нейронные сети</span>
+        </div>
+        <p class="stair-insight">&laquo;Переход от&nbsp;исполнителя к&nbsp;ученику&raquo;</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Evolution formula -->
+<div class="evol-formula">
+  <div class="evol-formula-inner">
+    <span class="evol-formula-step">Сил</span>
+    <span class="evol-formula-arrow">&rarr;</span>
+    <span class="evol-formula-step">Движений</span>
+    <span class="evol-formula-arrow">&rarr;</span>
+    <span class="evol-formula-step">Операций</span>
+    <span class="evol-formula-arrow">&rarr;</span>
+    <span class="evol-formula-step">Коммуникации</span>
+    <span class="evol-formula-arrow">&rarr;</span>
+    <span class="evol-formula-step active">Обучения</span>
+  </div>
+  <p class="evol-formula-caption">Преобразование сил &rarr; движений &rarr; операций &rarr; коммуникации &rarr; обучения</p>
+</div>
+
+<!-- End Section 2 -->
+
+<!-- Narrative bridge: Evolution -> Chronology -->
+<div class="narrative-bridge">
+  Пять ступеней эволюции машины проявились в конкретных изобретениях. Ниже — хронология 23 физических артефактов, сгруппированных в 6 эпох.
 </div>
 
 <div class="section-hdr">
@@ -497,6 +1803,156 @@
     <div class="conn-lbl"><div class="arr"></div><br><p>Железо готово — нужен формальный язык логики</p></div>
 
     </div></div>
+
+<!-- Narrative bridge: Epoch 2 -> Communication Chain -->
+<div class="narrative-bridge">
+  Прежде чем логика получит электронное тело, стоит проследить параллельную линию — как машина шаг за шагом забирала у человека функции коммуникации: кодирование, передачу и, наконец, декодирование.
+</div>
+
+<!-- === Section 4: Communication Chain === -->
+
+<div class="section-hdr" style="border-top: 1px solid rgba(201,168,76,0.12); padding-top: 5rem;">
+  <h2>Коммуникационная цепочка</h2>
+  <p>Как машина шаг за шагом забирала функции кодирования и декодирования</p>
+</div>
+
+<div class="comm-chain-section">
+  <div class="comm-chain-wrap">
+    <div class="comm-chain">
+
+      <!-- Node 1: Signal Flags -->
+      <div class="comm-node" onclick="toggleComm(this)">
+        <img class="comm-node-img" src="img/comm_flags.jpg" alt="Сигнальные флаги" loading="lazy">
+        <div class="comm-node-body">
+          <span class="comm-badge encoding">КОДИРОВАНИЕ</span>
+          <div class="comm-node-title">Сигнальные флаги</div>
+          <div class="comm-node-year">XVII-XVIII вв.</div>
+          <p class="comm-node-brief">Визуальное кодирование команд</p>
+          <div class="comm-expand-hint">[ click ]</div>
+        </div>
+        <div class="comm-desc">
+          <p>Живая речь заменена операциями со знаками. Первая мануфактуризация речи: команда разбита на элементарные символы, каждый из которых однозначно читается на расстоянии. Сигнальные книги — первые таблицы кодирования команд.</p>
+        </div>
+      </div>
+
+      <!-- Arrow 1-2 -->
+      <div class="comm-arrow">
+        <div class="comm-arrow-line"></div>
+        <div class="comm-arrow-text">знак становится<br>ретранслируемым</div>
+      </div>
+
+      <!-- Node 2: Optical Telegraph -->
+      <div class="comm-node" onclick="toggleComm(this)">
+        <img class="comm-node-img" src="img/comm_semaphore.jpg" alt="Оптический телеграф" loading="lazy">
+        <div class="comm-node-body">
+          <span class="comm-badge network">СЕТЬ</span>
+          <div class="comm-node-title">Оптический телеграф</div>
+          <div class="comm-node-year">1794, Шапп</div>
+          <p class="comm-node-brief">Сетевая ретрансляция</p>
+          <div class="comm-expand-hint">[ click ]</div>
+        </div>
+        <div class="comm-desc">
+          <p>Цепочка башен с подвижными планками: 196 различных положений. Оператор — функциональный узел, не знающий содержания сообщения. Впервые передача отделена от понимания. Рождение сети как инфраструктуры.</p>
+        </div>
+      </div>
+
+      <!-- Arrow 2-3 -->
+      <div class="comm-arrow">
+        <div class="comm-arrow-line"></div>
+        <div class="comm-arrow-text">пространство<br>заменено временем</div>
+      </div>
+
+      <!-- Node 3: Morse Code -->
+      <div class="comm-node" onclick="toggleComm(this)">
+        <img class="comm-node-img" src="img/comm_morse.jpg" alt="Азбука Морзе" loading="lazy">
+        <div class="comm-node-body">
+          <span class="comm-badge binary">БИНАРНОСТЬ</span>
+          <div class="comm-node-title">Азбука Морзе</div>
+          <div class="comm-node-year">1838</div>
+          <p class="comm-node-brief">Бинарное кодирование временем</p>
+          <div class="comm-expand-hint">[ click ]</div>
+        </div>
+        <div class="comm-desc">
+          <p>Один провод, два состояния: точка и тире. Вместо пространственных конфигураций — временные последовательности. Рождение бинарности: любое сообщение кодируется двумя символами. Предвестник цифровой эры.</p>
+        </div>
+      </div>
+
+      <!-- Arrow 3-4 -->
+      <div class="comm-arrow">
+        <div class="comm-arrow-line"></div>
+        <div class="comm-arrow-text">от практики<br>к теории</div>
+      </div>
+
+      <!-- Node 4: Shannon -->
+      <div class="comm-node" onclick="toggleComm(this)">
+        <img class="comm-node-img" src="img/comm_shannon.jpg" alt="Теория информации Шеннона" loading="lazy">
+        <div class="comm-node-body">
+          <span class="comm-badge formalization">ФОРМАЛИЗАЦИЯ</span>
+          <div class="comm-node-title">Теория Шеннона</div>
+          <div class="comm-node-year">1948</div>
+          <p class="comm-node-brief">Бит как мера защиты от хаоса</p>
+          <div class="comm-expand-hint">[ click ]</div>
+        </div>
+        <div class="comm-desc">
+          <p>Энтропия измерена, шум побеждается кодированием. Схема Источник &rarr; Кодер &rarr; Канал &rarr; Декодер &rarr; Приёмник — универсальная модель любой коммуникации. Информация отделена от смысла и стала измеримой величиной.</p>
+        </div>
+      </div>
+
+      <!-- Arrow 4-5 -->
+      <div class="comm-arrow">
+        <div class="comm-arrow-line"></div>
+        <div class="comm-arrow-text">машина берёт<br>декодирование</div>
+      </div>
+
+      <!-- Node 5: Perceptron -->
+      <div class="comm-node" onclick="toggleComm(this)">
+        <img class="comm-node-img" src="img/comm_perceptron.jpg" alt="Перцептрон" loading="lazy">
+        <div class="comm-node-body">
+          <span class="comm-badge decoding">ДЕКОДИРОВАНИЕ</span>
+          <div class="comm-node-title">Перцептрон</div>
+          <div class="comm-node-year">1957, Розенблатт</div>
+          <p class="comm-node-brief">Машинное распознавание паттернов</p>
+          <div class="comm-expand-hint">[ click ]</div>
+        </div>
+        <div class="comm-desc">
+          <p>Веса вместо жёсткой логики. Машина Mark-1 берёт на себя декодирование — функцию, бывшую исключительно человеческой. Впервые машина не просто передаёт сигнал, а извлекает из него смысл.</p>
+        </div>
+      </div>
+
+    </div><!-- .comm-chain -->
+  </div><!-- .comm-chain-wrap -->
+
+  <!-- Thesis -->
+  <div class="comm-thesis">
+    <div class="comm-thesis-diagram">
+      <div class="shannon-chain">
+        <span class="shannon-block source">Источник</span>
+        <span class="shannon-arr">&rarr;</span>
+        <span class="shannon-block encoder">Кодер</span>
+        <span class="shannon-arr">&rarr;</span>
+        <span class="shannon-block channel">Канал</span>
+        <span class="shannon-arr">&rarr;</span>
+        <span class="shannon-block decoder">Декодер</span>
+        <span class="shannon-arr">&rarr;</span>
+        <span class="shannon-block receiver">Приёмник</span>
+      </div>
+    </div>
+    <p class="comm-thesis-text">
+      На каждом историческом этапе машина берёт на себя <strong>всё большую часть цепочки</strong>:
+      сначала кодирование, затем передачу, потом формализацию,
+      и наконец — <strong>декодирование</strong>, то есть извлечение смысла.
+    </p>
+  </div>
+
+</div><!-- .comm-chain-section -->
+
+<!-- Narrative bridge: Communication Chain -> Epoch 3 -->
+<div class="narrative-bridge">
+  Коммуникационная цепочка привела к формализации информации. Теперь вернёмся к хронологии: именно в этот момент Шеннон даёт математике электронное тело.
+</div>
+
+<!-- End Section 4 -->
+
     <div class="epoch-hdr">
       <div class="epoch-num">ЭПОХА 3</div>
       <h3>Математическое основание</h3>
@@ -754,6 +2210,144 @@
   </div>
 </div>
 
+<!-- Narrative bridge: Chronology -> Three Programs -->
+<div class="narrative-bridge">
+  За 384 года технологической эволюции стоят не просто изобретения, а фундаментальные программы — каждая со своим пониманием того, что такое интеллект и где место машины.
+</div>
+
+<!-- === Section 1: Three Programs of AI === -->
+
+<div class="section-hdr">
+  <h2>Три программы ИИ</h2>
+  <p>Каждая программа помещает мыслящую машину в разное место на Схеме МД</p>
+</div>
+
+<div class="programs-section">
+  <div class="programs-intro">
+    Не всё ново под луной. За технологической гонкой стоят три фундаментальные программы, каждая из которых опирается на своё понимание того, что такое интеллект. Теория&nbsp;&mdash; это &laquo;жёсткое ядро&raquo; программы: она определяет, какие задачи считаются важными и какие инженерные решения будут создаваться.
+  </div>
+
+  <div class="programs-grid">
+
+    <!-- Card 1: Turing -->
+    <div class="program-card" data-card="turing">
+      <img class="program-card-img" src="img/prog_turing.jpg" alt="Программа Тьюринга" loading="lazy">
+      <span class="program-icon">&gt;_</span>
+      <div class="program-name">Программа Тьюринга</div>
+      <div class="program-subtitle">ИМИТАТОР</div>
+      <div class="program-brief">
+        Может ли машина имитировать человека? Если две системы выдают одинаковый результат&nbsp;&mdash; их природа эквивалентна.
+      </div>
+      <div class="expand-hint">[ подробнее ]</div>
+      <div class="program-detail">
+        <ul>
+          <li><strong>Жёсткое ядро:</strong> Алгоритмический подход. Ключевой фактор&nbsp;&mdash; действие. Если машина умеет действовать как человек&nbsp;&mdash; следовательно, умеет мыслить.</li>
+          <li><strong>Гипотеза эквивалентности:</strong> Если две системы (человек и машина) выдают одинаковый результат на выходе, то их природа (мышление) эквивалентна.</li>
+          <li><strong>Парадокс Тьюринга:</strong> Он разработал теорию, но сам не стремился реализовать &laquo;деятельностную&raquo; машину. Зато запустил коммуникативный подход&nbsp;&mdash; через Тест Тьюринга: если машина неотличима от человека в диалоге, она мыслит.</li>
+          <li><strong>Предпосылка:</strong> Отбрасываем то, что невычислимо. Машина Тьюринга работает только с тем, что можно алгоритмизировать.</li>
+        </ul>
+        <div class="program-schema">Слой МД: Мыследействие (М-Д)</div>
+        <div class="program-formula">Мышление = Действие. Если выдаёт правильный результат&nbsp;&mdash; значит, мыслит.</div>
+      </div>
+    </div>
+
+    <!-- Card 2: Minsky -->
+    <div class="program-card" data-card="minsky">
+      <img class="program-card-img" src="img/prog_minsky.jpg" alt="Программа Минского" loading="lazy">
+      <span class="program-icon">{...}</span>
+      <div class="program-name">Программа Минского</div>
+      <div class="program-subtitle">ОБЩЕСТВО РАЗУМА</div>
+      <div class="program-brief">
+        Разум&nbsp;&mdash; это &laquo;общество&raquo; из множества глупых агентов. Разумным является только их взаимодействие.
+      </div>
+      <div class="expand-hint">[ подробнее ]</div>
+      <div class="program-detail">
+        <ul>
+          <li><strong>Жёсткое ядро:</strong> Символьный ИИ. Мышление&nbsp;&mdash; это работа со структурами данных и смыслами. Цель&nbsp;&mdash; моделирование внутренней архитектуры знаний и здравого смысла.</li>
+          <li><strong>Society of Mind:</strong> Разум состоит из крошечных агентов, каждый из которых сам по себе глуп. Разумным является только их взаимодействие. Это не нейронная сеть, а система с явной архитектурой.</li>
+          <li><strong>Теория фреймов:</strong> Фрейм&nbsp;&mdash; структура данных для представления стереотипной ситуации. Шахматы&nbsp;&mdash; легко. &laquo;Здравый смысл&raquo;&nbsp;&mdash; сложнейшая сеть из миллионов фреймов, которую крайне трудно формализовать.</li>
+          <li><strong>Эмоции как режимы работы:</strong> Эмоции&nbsp;&mdash; не помеха мышлению, а &laquo;режимы работы&raquo;, которые включают одни группы агентов и выключают другие.</li>
+        </ul>
+        <div class="program-schema">Слой МД: Мышление (М)</div>
+        <div class="program-formula">Мышление = Архитектура знаний. Не имитация ответов, а моделирование внутренней структуры.</div>
+      </div>
+    </div>
+
+    <!-- Card 3: Engelbart -->
+    <div class="program-card" data-card="engelbart">
+      <img class="program-card-img" src="img/prog_engelbart.jpg" alt="Программа Энгельбарта" loading="lazy">
+      <span class="program-icon">H+T</span>
+      <div class="program-name">Программа Энгельбарта</div>
+      <div class="program-subtitle">УСИЛИТЕЛЬ</div>
+      <div class="program-brief">
+        Не заменять человека машиной, а усилить человеческий интеллект. Машина&nbsp;&mdash; часть системы, которая делает человека умнее.
+      </div>
+      <div class="expand-hint">[ подробнее ]</div>
+      <div class="program-detail">
+        <ul>
+          <li><strong>Жёсткое ядро:</strong> Аугментация. Не замена человека, а его усиление. Машина&nbsp;&mdash; лишь часть системы.</li>
+          <li><strong>&laquo;Мать всех демо&raquo; (1968):</strong> Исторический показ: мышь, гипертекст, видеоконференция, коллаборативная работа&nbsp;&mdash; всё за одну демонстрацию.</li>
+          <li><strong>Система H-LAM/T:</strong> Симбиоз пяти элементов&nbsp;&mdash; Human (Человек), Language (Язык), Artifacts (Артефакты/компьютер), Methodology (Методология), Training (Обучение). Машина&nbsp;&mdash; лишь один из пяти.</li>
+          <li><strong>Три уровня деятельности:</strong> A.&nbsp;Business&nbsp;as&nbsp;usual&nbsp;&mdash; повседневные операции. B.&nbsp;Change&nbsp;&mdash; изменение процессов. C.&nbsp;Меняем то, как мы меняем&nbsp;&mdash; метаизменения.</li>
+        </ul>
+        <div class="program-schema">Слой МД: Мысле-коммуникация + Мыследействие (М-К + М-Д)</div>
+        <div class="program-formula">Мышление = Человек + Инструмент. Один без другого неполон.</div>
+      </div>
+    </div>
+
+  </div><!-- /programs-grid -->
+
+  <!-- Contrast Table -->
+  <div class="programs-contrast-wrap">
+    <div class="programs-contrast-title">СРАВНЕНИЕ ПРОГРАММ</div>
+    <table class="programs-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Тьюринг</th>
+          <th>Минский</th>
+          <th>Энгельбарт</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Вопрос</td>
+          <td>Может ли машина имитировать?</td>
+          <td>Как устроен разум?</td>
+          <td>Как усилить человека?</td>
+        </tr>
+        <tr>
+          <td>Метод</td>
+          <td>Алгоритм + Тест</td>
+          <td>Агенты + Фреймы</td>
+          <td>Человек + Инструмент</td>
+        </tr>
+        <tr>
+          <td>Слой МД</td>
+          <td>Мыследействие</td>
+          <td>Мышление</td>
+          <td>Мысле-коммуникация + Мыследействие</td>
+        </tr>
+        <tr>
+          <td>Цель</td>
+          <td>Замена</td>
+          <td>Моделирование</td>
+          <td>Усиление</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Closing Quote -->
+  <div class="programs-quote">
+    <p>Важно не столько конкретные персоналии, сколько разные типологические решения&nbsp;&mdash; куда программа помещает мыслящую машину. Процессы нейровосприятия&nbsp;&mdash; это как перья у птицы. Когда мы делаем самолёт, главным становится подъёмная сила. Точно так же мышление&nbsp;&mdash; это не его физическая реализация в мозгу, а культурный интерсубъективный процесс.</p>
+    <div class="quote-src">Щедровицкий П. Г.</div>
+  </div>
+
+</div><!-- /programs-section -->
+
+<!-- End Section 1 -->
+
 <div class="section-hdr">
   <h2>Итоговая таблица СРТ</h2>
   <p>Система Разделения Труда: от механики к когнитивным архитектурам</p>
@@ -978,6 +2572,116 @@
   </div>
 </div>
 
+<!-- Narrative bridge: Graph -> MD Scheme -->
+<div class="narrative-bridge">
+  Граф зависимостей показал связи между компонентами. Но на каком уровне человеческой деятельности работает каждый из них? Щедровицкий предлагает рамку из трёх слоёв мыследеятельности.
+</div>
+
+<!-- === Section 5: Scheme of Mental Activity === -->
+
+<div class="section-hdr" style="padding-top:5rem;">
+  <h2>Схема мыследеятельности</h2>
+  <p>Рамка Щедровицкого: какой слой человеческой деятельности автоматизирует каждая технология ИИ</p>
+</div>
+
+<div class="md-wrap">
+
+  <div class="md-intro">
+    <p>
+      Щедровицкий предлагает декомпозировать вопрос <strong style="color:var(--gold);">«Может ли машина мыслить?»</strong> на три самостоятельных вопроса — по числу слоёв мыследеятельности. Каждый слой — это отдельный тип интеллектуальной работы. Каждая программа ИИ автоматизирует свой слой, и прогресс в одном не гарантирует прогресс в другом.
+    </p>
+    <img src="img/md_scheme.jpg" alt="Трёхслойная схема мыследеятельности Щедровицкого" class="md-hero-img">
+  </div>
+
+  <!-- Vertical arrows labels -->
+  <div class="md-diagram">
+    <div class="md-arrows-left">
+      <span class="md-arrow-label">Рефлексия&nbsp;&uarr;</span>
+    </div>
+
+    <div class="md-layers">
+
+      <!-- Layer M: Thinking -->
+      <div class="md-layer md-thinking" data-md-layer>
+        <div class="md-layer-label">М</div>
+        <div class="md-layer-body">
+          <div class="md-layer-title">Чистое мышление</div>
+          <p class="md-layer-def">Рефлексия, абстракция, построение идеальных объектов. Мыслитель смотрит не на мир, а на средства мышления о мире.</p>
+          <div class="md-layer-program">
+            <span class="md-program-tag">Программа ИИ:</span>
+            Энгельбарт &mdash; не замена, а усиление
+          </div>
+          <div class="md-layer-status">ИИ только подступает к этому слою</div>
+        </div>
+        <div class="md-layer-tech">
+          <span class="md-badge md-badge-gold">RLHF <span class="md-partial">(частично)</span></span>
+          <span class="md-badge md-badge-gold">Reasoning-модели</span>
+        </div>
+      </div>
+
+      <!-- Layer M-K: Communication -->
+      <div class="md-layer md-comm" data-md-layer>
+        <div class="md-layer-label">К</div>
+        <div class="md-layer-body">
+          <div class="md-layer-title">Мысль-коммуникация</div>
+          <p class="md-layer-def">Обмен текстами и знаками. Координация коллективного действия.</p>
+          <div class="md-layer-program">
+            <span class="md-program-tag">Программа ИИ:</span>
+            Минский &mdash; «общество разума», фреймы, онтологии
+          </div>
+          <div class="md-layer-status">Здесь работают современные LLM</div>
+        </div>
+        <div class="md-layer-tech">
+          <span class="md-badge md-badge-purple">Схемы Шеннона</span>
+          <span class="md-badge md-badge-purple">Self-Attention</span>
+          <span class="md-badge md-badge-purple">LLM</span>
+        </div>
+      </div>
+
+      <!-- Layer mD: Action -->
+      <div class="md-layer md-action" data-md-layer>
+        <div class="md-layer-label">мД</div>
+        <div class="md-layer-body">
+          <div class="md-layer-title">Мыследействие</div>
+          <p class="md-layer-def">Практическое действие с объектами. Преобразование материального мира.</p>
+          <div class="md-layer-program">
+            <span class="md-program-tag">Программа ИИ:</span>
+            Тьюринг &mdash; если машина умеет действовать, значит «мыслит»
+          </div>
+          <div class="md-layer-status">Первое что было автоматизировано</div>
+        </div>
+        <div class="md-layer-tech">
+          <span class="md-badge md-badge-blue">Паскалина</span>
+          <span class="md-badge md-badge-blue">Перфокарта</span>
+          <span class="md-badge md-badge-blue">Реле</span>
+          <span class="md-badge md-badge-blue">Backprop</span>
+          <span class="md-badge md-badge-blue">CNN</span>
+          <span class="md-badge md-badge-blue">ReLU</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="md-arrows-right">
+      <span class="md-arrow-label">Понимание&nbsp;&darr;</span>
+    </div>
+  </div>
+
+  <!-- Quote -->
+  <div class="md-quote">
+    <p>&laquo;Процессы нейровосприятия &mdash; это как перья у птицы: птица летит не потому, что у неё перья, а потому что у неё крылья. Перья &mdash; это другой уровень организации. Точно так же нейронные процессы &mdash; это один уровень, а мышление &mdash; совсем другой.&raquo;</p>
+    <div class="md-quote-src">П. Г. Щедровицкий</div>
+  </div>
+
+  <!-- Conclusion -->
+  <div class="md-conclusion">
+    <p>ИИ поднимается по слоям снизу вверх: <strong style="color:var(--blue);">действия</strong> &rarr; <strong style="color:#a078c8;">коммуникация</strong> &rarr; <strong style="color:var(--gold);">мышление</strong>. Каждый следующий слой требует качественно иного подхода к автоматизации.</p>
+  </div>
+
+</div>
+
+<!-- End Section 5 -->
+
 <div class="section-hdr" style="padding-top:5rem;">
   <h2>Ограничения развития СРТ ИИ</h2>
   <p>Почему прогресс в одном слое не гарантирует прогресс системы в целом</p>
@@ -1009,6 +2713,168 @@
     Это и есть механизм эволюции СРТ: не линейный прогресс, а цепная реакция ограничений и разрешений, где каждый прорыв порождает следующий вызов.
   </p>
 </div>
+
+<!-- === Section 3: Weak Link Principle === -->
+
+<div class="weaklink-intro">
+  <h3>Принцип слабого звена</h3>
+  <p class="wl-subtitle">
+    По Щедровицкому, машина появляется там, где обнаруживается «слабое звено» —
+    функциональное место, которое человек занимает неэффективно.
+    Каждое разрешение порождает новое ограничение, запуская цепную реакцию СРТ.
+  </p>
+  <img class="wl-hero-img" src="img/chain-reaction.jpg" alt="Цепная реакция слабых звеньев в СРТ">
+</div>
+
+<div class="chain-wrap">
+
+  <!-- Chain 1: Babbage -> Precision -> Relay -> Triode -->
+  <div class="chain-example" data-chain="1">
+    <div class="chain-title">Цепочка I — От замысла к электронике</div>
+    <div class="chain-row">
+      <div class="chain-node weak-link" onclick="openM('engine')">
+        <img src="img/engine.jpg" alt="Аналитическая машина">
+        <div class="cn-label">Бэббидж<br>1830-е</div>
+      </div>
+      <div class="chain-arrow">
+        <span class="chain-arrow-label">расшивка</span>
+      </div>
+      <div class="chain-node" onclick="openM('gauge')">
+        <img src="img/gauge.jpg" class="infra" alt="Концевые меры">
+        <div class="cn-label">Концевые меры<br>кон. XIX в.</div>
+      </div>
+      <div class="chain-arrow">
+        <span class="chain-arrow-label">новое</span>
+      </div>
+      <div class="chain-node" onclick="openM('relay')">
+        <img src="img/relay.jpg" alt="Реле">
+        <div class="cn-label">Реле<br>1889</div>
+      </div>
+      <div class="chain-arrow">
+        <span class="chain-arrow-label">расшивка</span>
+      </div>
+      <div class="chain-node new-constraint" onclick="openM('triode')">
+        <img src="img/triode.jpg" alt="Триод">
+        <div class="cn-label">Триод<br>1906</div>
+      </div>
+    </div>
+    <div class="chain-explain">
+      <div class="chain-explain-item weak">
+        <div class="ce-tag">Слабое звено</div>
+        Точность производства деталей не позволяла реализовать Аналитическую машину Бэббиджа — каждая деталь была уникальной.
+      </div>
+      <div class="chain-explain-item answer">
+        <div class="ce-tag">Ответ</div>
+        Стандарты точности до микрона (Иогансон): взаимозаменяемые детали сделали возможным массовое производство машин.
+      </div>
+      <div class="chain-explain-item next">
+        <div class="ce-tag">Новое ограничение</div>
+        Электромеханические реле инерционны, громоздки, ненадёжны при масштабировании — нужна безынерционная электроника (триод).
+      </div>
+    </div>
+  </div>
+
+  <!-- Chain 2: Neuron -> Backprop -> CUDA -> HBM -->
+  <div class="chain-example" data-chain="2">
+    <div class="chain-title">Цепочка II — От нейрона к параллельным вычислениям</div>
+    <div class="chain-row">
+      <div class="chain-node weak-link" onclick="openM('neuron')">
+        <img src="img/neuron.jpg" alt="Математический нейрон">
+        <div class="cn-label">Нейрон<br>1943</div>
+      </div>
+      <div class="chain-arrow">
+        <span class="chain-arrow-label">расшивка</span>
+      </div>
+      <div class="chain-node" onclick="openM('backprop')">
+        <img src="img/backprop.jpg" alt="Backpropagation">
+        <div class="cn-label">Backprop<br>1986</div>
+      </div>
+      <div class="chain-arrow">
+        <span class="chain-arrow-label">новое</span>
+      </div>
+      <div class="chain-node" onclick="openM('cuda')">
+        <img src="img/cuda.jpg" class="infra" alt="NVIDIA CUDA">
+        <div class="cn-label">CUDA<br>2006</div>
+      </div>
+      <div class="chain-arrow">
+        <span class="chain-arrow-label">расшивка</span>
+      </div>
+      <div class="chain-node new-constraint" onclick="openM('hbm')">
+        <img src="img/hbm.jpg" class="infra" alt="HBM">
+        <div class="cn-label">HBM<br>2010-е</div>
+      </div>
+    </div>
+    <div class="chain-explain">
+      <div class="chain-explain-item weak">
+        <div class="ce-tag">Слабое звено</div>
+        Один нейрон не решает XOR — доказано Минским в 1969 г. Наступила «зима ИИ»: однослойные сети не способны к сложному обучению.
+      </div>
+      <div class="chain-explain-item answer">
+        <div class="ce-tag">Ответ</div>
+        Backpropagation — обучение многослойных сетей через обратное распространение ошибки. Математическая основа «второй Большой Штуки».
+      </div>
+      <div class="chain-explain-item next">
+        <div class="ce-tag">Новое ограничение</div>
+        Колоссальные вычисления для глубоких сетей — CPU не справляются. Нужны GPU и быстрая память (HBM) для матричных операций.
+      </div>
+    </div>
+  </div>
+
+  <!-- Chain 3: Shannon -> Big Data -> Attention -> Cloud Farms -->
+  <div class="chain-example" data-chain="3">
+    <div class="chain-title">Цепочка III — От теории информации к облачным фермам</div>
+    <div class="chain-row">
+      <div class="chain-node weak-link" onclick="openM('shannon')">
+        <img src="img/shannon.jpg" alt="Схемы Шеннона">
+        <div class="cn-label">Шеннон<br>1938</div>
+      </div>
+      <div class="chain-arrow">
+        <span class="chain-arrow-label">расшивка</span>
+      </div>
+      <div class="chain-node" onclick="openM('bigdata')">
+        <img src="img/bigdata.jpg" class="infra" alt="Big Data">
+        <div class="cn-label">Big Data<br>2000-е</div>
+      </div>
+      <div class="chain-arrow">
+        <span class="chain-arrow-label">новое</span>
+      </div>
+      <div class="chain-node" onclick="openM('attention')">
+        <img src="img/attention.jpg" alt="Self-Attention">
+        <div class="cn-label">Attention<br>2017</div>
+      </div>
+      <div class="chain-arrow">
+        <span class="chain-arrow-label">расшивка</span>
+      </div>
+      <div class="chain-node new-constraint" onclick="openM('cloudfarm')">
+        <img src="img/cloudfarm.jpg" class="infra" alt="Облачные фермы">
+        <div class="cn-label">Облачные фермы<br>2020-е</div>
+      </div>
+    </div>
+    <div class="chain-explain">
+      <div class="chain-explain-item weak">
+        <div class="ce-tag">Слабое звено</div>
+        Канал связи имеет физический предел пропускной способности. Данных больше, чем можно обработать последовательными методами.
+      </div>
+      <div class="chain-explain-item answer">
+        <div class="ce-tag">Ответ</div>
+        Теория информации дала «бит» и умное кодирование. Интернет и Big Data сделали доступными терабайты обучающих данных.
+      </div>
+      <div class="chain-explain-item next">
+        <div class="ce-tag">Новое ограничение</div>
+        Потоки данных огромной плотности: RNN не масштабируются. Self-Attention решает это, но требует ~25 000 GPU и $500M+ на кластер.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<p class="weaklink-bridge">
+  Эти три цепочки — частные случаи общего закона: каждое «слабое звено» СРТ
+  порождает новый компонент, который создаёт новые ограничения на смежных слоях.
+  В таблице ниже — полная картина этих взаимозависимостей.
+</p>
+
+<!-- End Section 3 -->
 
 <table class="limits-table">
 <thead>
@@ -1083,7 +2949,7 @@
 <div class="footer">
   <p class="yr">1642 → 2026</p>
   <p>384 года эволюции — от латунных шестерней до когнитивных архитектур</p>
-  <p class="st"><span style="color:var(--gold)">12</span> функциональных + <span style="color:var(--blue)">11</span> обеспечивающих = 23 компонента СРТ</p>
+  <p class="st"><span style="color:var(--gold)">12</span> функциональных + <span style="color:var(--blue)">11</span> обеспечивающих = 23 компонента СРТ &middot; 5 концептуальных секций</p>
   <p style="margin-top:1rem;font-style:italic;font-size:0.8rem">По мотивам лекций П. Г. Щедровицкого о системе разделения труда</p>
 </div>
 
@@ -1211,5 +3077,142 @@ function closeM(){document.getElementById('modal').classList.remove('on');}
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeM();});
 window.addEventListener('load',()=>setTimeout(drawEdges,300));
 window.addEventListener('resize',drawEdges);
+
+/* ============================================================
+   Section 2: Evolution stairs — cascade animation
+   ============================================================ */
+(function () {
+  'use strict';
+  var STAGGER_DELAY = 150;
+  var observerOptions = { root: null, rootMargin: '0px 0px -60px 0px', threshold: 0.15 };
+  var revealedCount = 0;
+
+  function revealElement(entry) {
+    var el = entry.target;
+    if (el.classList.contains('visible')) return;
+    var delay = revealedCount * STAGGER_DELAY;
+    revealedCount++;
+    el.style.transitionDelay = delay + 'ms';
+    el.classList.add('visible');
+    setTimeout(function () { el.style.transitionDelay = ''; }, delay + 800);
+  }
+
+  var stairObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        revealElement(entry);
+        stairObserver.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  function initStairObservers() {
+    var stairs = document.querySelectorAll('.stair');
+    var transitions = document.querySelectorAll('.stair-transition');
+    var formula = document.querySelector('.evol-formula');
+    var allElements = [];
+    stairs.forEach(function (s) { allElements.push(s); });
+    transitions.forEach(function (t) { allElements.push(t); });
+    allElements.sort(function (a, b) {
+      return parseFloat(a.getAttribute('data-step') || 999) - parseFloat(b.getAttribute('data-step') || 999);
+    });
+    allElements.forEach(function (el) { stairObserver.observe(el); });
+
+    if (formula) {
+      var formulaObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) { entry.target.classList.add('visible'); formulaObserver.unobserve(entry.target); }
+        });
+      }, { root: null, rootMargin: '0px', threshold: 0.3 });
+      formulaObserver.observe(formula);
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initStairObservers);
+  } else {
+    initStairObservers();
+  }
+})();
+
+/* ============================================================
+   Section 4: Communication Chain — interactivity
+   ============================================================ */
+function toggleComm(el) {
+  var node = el.closest('.comm-node');
+  if (!node) return;
+  node.classList.toggle('expanded');
+}
+
+(function initCommChainObserver() {
+  var commObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.comm-node, .comm-arrow, .comm-thesis').forEach(function(el, i) {
+    el.style.transitionDelay = (i * 0.12) + 's';
+    commObs.observe(el);
+  });
+})();
+
+/* ============================================================
+   Section 1: Three Programs — expand/collapse & animation
+   ============================================================ */
+(function() {
+  'use strict';
+
+  document.querySelectorAll('.program-card').forEach(function(card) {
+    card.addEventListener('click', function(e) {
+      if (window.getSelection().toString().length > 0) return;
+      document.querySelectorAll('.program-card.expanded').forEach(function(other) {
+        if (other !== card) other.classList.remove('expanded');
+      });
+      card.classList.toggle('expanded');
+    });
+  });
+
+  var programObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.program-card').forEach(function(card) {
+    programObs.observe(card);
+  });
+})();
+
+/* ============================================================
+   Section 5: MD Layers cascade animation
+   ============================================================ */
+(function() {
+  var mdObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('[data-md-layer]').forEach(function(layer) {
+    mdObs.observe(layer);
+  });
+})();
+
+/* ============================================================
+   Section 3: Weak Link — chain animation
+   ============================================================ */
+(function() {
+  var chainObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.chain-example').forEach(function(el) {
+    chainObs.observe(el);
+  });
+})();
+
 </script>
 </body></html>
