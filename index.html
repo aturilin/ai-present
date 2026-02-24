@@ -228,9 +228,9 @@
   .modal-meta { text-align: center; margin-top: 0.8rem; }
   .modal-meta h3 { color: var(--gold); font-size: 1.7rem; }
   .modal-meta p { color: var(--text-dim); font-size: 1.1rem; }
-  .modal-srt { margin-top: 1rem; padding: 1rem 1.5rem; background: rgba(201,168,76,0.06); border-left: 3px solid var(--gold-dim); border-radius: 0 8px 8px 0; text-align: left; max-width: 800px; margin-left: auto; margin-right: auto; }
-  .modal-srt .srt-label { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--gold-dim); letter-spacing: 0.15em; margin-bottom: 0.4rem; }
-  .modal-srt .srt-text { font-size: 1.05rem; font-style: italic; color: var(--text-dim); line-height: 1.6; }
+  .modal-srt { margin-top: 1.2rem; padding: 1.4rem 2rem; background: rgba(201,168,76,0.06); border-left: 4px solid var(--gold-dim); border-radius: 0 8px 8px 0; text-align: left; max-width: 850px; margin-left: auto; margin-right: auto; }
+  .modal-srt .srt-label { font-family: 'JetBrains Mono', monospace; font-size: 1rem; color: var(--gold-dim); letter-spacing: 0.15em; margin-bottom: 0.5rem; }
+  .modal-srt .srt-text { font-size: 1.25rem; font-style: italic; color: var(--text-dim); line-height: 1.7; }
 
   .limits-wrap { max-width: 1200px; margin: 0 auto; padding: 2rem; }
   .limits-table { width: 100%; border-collapse: collapse; font-family: 'Cormorant Garamond', Georgia, serif; }
@@ -979,11 +979,37 @@
 </div>
 
 <div class="section-hdr" style="padding-top:5rem;">
-  <h2>Ограничения и взаимовлияние</h2>
-  <p>Каждое разрешение одного ограничения порождает нагрузку на другие слои СРТ</p>
+  <h2>Ограничения развития СРТ ИИ</h2>
+  <p>Почему прогресс в одном слое не гарантирует прогресс системы в целом</p>
 </div>
 
 <div class="limits-wrap">
+
+<div style="max-width:900px; margin:0 auto 3rem; line-height:1.8;">
+  <p style="font-size:1.3rem; color:var(--text); margin-bottom:1.2rem;">
+    Щедровицкий показывает ключевое свойство СРТ: <strong style="color:var(--gold)">слои не независимы</strong>. Каждый компонент — функциональный или обеспечивающий — существует в сети взаимных зависимостей. Решение проблемы в одном слое неизбежно создаёт нагрузку на другие.
+  </p>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1.5rem; margin:2rem 0;">
+    <div style="padding:1.2rem; border-radius:10px; background:rgba(201,168,76,0.06); border:1px solid rgba(201,168,76,0.15);">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:0.85rem; color:var(--gold-dim); letter-spacing:0.1em; margin-bottom:0.5rem;">ОГРАНИЧЕНИЕ</div>
+      <p style="font-size:1.15rem; color:var(--text);">Узкое место в текущей конфигурации СРТ — физический, алгоритмический или инфраструктурный барьер, который не даёт системе масштабироваться.</p>
+    </div>
+    <div style="padding:1.2rem; border-radius:10px; background:rgba(74,158,255,0.06); border:1px solid rgba(74,158,255,0.15);">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:0.85rem; color:var(--blue-dim); letter-spacing:0.1em; margin-bottom:0.5rem;">РАЗРЕШЕНИЕ</div>
+      <p style="font-size:1.15rem; color:var(--text);">Инженерное решение, которое снимает барьер: новый материал, новая архитектура чипа, новый алгоритм или новая организационная модель.</p>
+    </div>
+    <div style="padding:1.2rem; border-radius:10px; background:rgba(232,164,76,0.06); border:1px solid rgba(232,164,76,0.15);">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:0.85rem; color:#e8a44c; letter-spacing:0.1em; margin-bottom:0.5rem;">ПОБОЧНЫЙ ЭФФЕКТ</div>
+      <p style="font-size:1.15rem; color:var(--text);">Каждое разрешение перераспределяет нагрузку на смежные слои СРТ — создаёт новые узкие места, которые потребуют собственных разрешений.</p>
+    </div>
+  </div>
+
+  <p style="font-size:1.2rem; color:var(--text-dim); font-style:italic; margin-top:1rem;">
+    Это и есть механизм эволюции СРТ: не линейный прогресс, а цепная реакция ограничений и разрешений, где каждый прорыв порождает следующий вызов.
+  </p>
+</div>
+
 <table class="limits-table">
 <thead>
 <tr><th>Ограничение</th><th>Разрешение</th><th>Влияние на другие слои</th></tr>
@@ -1041,7 +1067,17 @@
 </tr>
 </tbody>
 </table>
-<p style="text-align:center; margin-top:1.5rem; font-style:italic; color:var(--text-dim); font-size:0.95rem;">Рис. 64. Взаимное влияние факторов ограничений развития СРТ ИИ — по П. Г. Щедровицкому</p>
+
+<div style="max-width:900px; margin:2rem auto 0; padding:1.5rem 2rem; background:rgba(201,168,76,0.04); border:1px solid rgba(201,168,76,0.1); border-radius:10px;">
+  <p style="font-size:1.2rem; color:var(--text); line-height:1.7; margin-bottom:0.8rem;">
+    <strong style="color:var(--gold);">Вывод Щедровицкого:</strong> СРТ в области ИИ — это не последовательность изобретений, а <em>живая сеть взаимозависимостей</em>. Нельзя «просто» увеличить вычислительную мощность — это автоматически потребует нового охлаждения, новых материалов, новой инфраструктуры и новых специалистов.
+  </p>
+  <p style="font-size:1.1rem; color:var(--text-dim); line-height:1.7;">
+    Именно поэтому прогресс ИИ определяется не гениальностью отдельного изобретателя, а зрелостью всей системы разделения труда — от литографии до энергосетей, от алгоритмов до этических стандартов.
+  </p>
+</div>
+
+<p style="text-align:center; margin-top:2rem; font-style:italic; color:var(--text-dim); font-size:1.05rem;">Рис. 64. Взаимное влияние факторов ограничений развития СРТ ИИ — по П. Г. Щедровицкому</p>
 </div>
 
 <div class="footer">
